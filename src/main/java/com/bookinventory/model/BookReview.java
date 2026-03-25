@@ -1,29 +1,65 @@
 package com.bookinventory.model;
 
-import java.util.List;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "reviewer")
-public class Reviewer {
+@Table(name = "bookreview")
+public class BookReview {
 
-    @Id
-    @Column(name = "ReviewerID")
-    private Integer reviewerID;
+	@Id
+	@Column(name = "ISBN", length = 13)
+	private String isbn;
 
-    @Column(name = "Name")
-    private String name;
+	@Id
+	@Column(name = "ReviewerID")
+	private Integer reviewerID;
 
-    @Column(name = "EmployedBy")
-    private String employedBy;
+	@Column(name = "Rating")
+	private Integer rating;
 
-    @OneToMany(mappedBy = "reviewer")
-    private List<BookReview> reviews;
+	@Column(name = "Comments", length = 255)
+	private String comments;
 
-    public Reviewer() {}
+	public BookReview() {
+		
+	}
+
+	public BookReview(String isbn, Integer reviewerID, Integer rating, String comments) {
+		this.isbn = isbn;
+		this.reviewerID = reviewerID;
+		this.rating = rating;
+		this.comments = comments;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public Integer getReviewerID() {
+		return reviewerID;
+	}
+
+	public void setReviewerID(Integer reviewerID) {
+		this.reviewerID = reviewerID;
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 }
