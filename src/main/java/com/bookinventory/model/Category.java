@@ -1,9 +1,6 @@
 package com.bookinventory.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "category")
@@ -11,6 +8,7 @@ public class Category {
 
     @Id
     @Column(name = "CatID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer catId;
 
     @Column(name = "CatDescription", length = 24)
