@@ -31,7 +31,12 @@ public class BookReview {
 		
 	}
 
-	public BookReview(Book book, Integer reviewerID, Integer rating, String comments) {
+	public BookReview(
+		Book book, 
+		Integer reviewerID, 
+		Integer rating, 
+		String comments
+	) {
 		this.book = book;
 		this.reviewerID = reviewerID;
 		this.rating = rating;
