@@ -32,9 +32,17 @@ public class Book {
     @JoinColumn(name = "PublisherID")
     private Publisher publisher;
 
-    public Book() {}
+    public Book() {
+    }
 
-    public Book(String isbn, String title, String description, Category category, String edition, Publisher publisher) {
+    public Book(
+            String isbn,
+            String title,
+            String description,
+            Category category,
+            String edition,
+            Publisher publisher
+    ) {
         this.isbn = isbn;
         this.title = title;
         this.description = description;
@@ -43,21 +51,51 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public String getIsbn() { return isbn; }
-    public void setIsbn(String isbn) { this.isbn = isbn; }
+    public String getIsbn() {
+        return isbn;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getTitle() {
+        return title;
+    }
 
-    public Category getCategory() { return category; }
-    public void setCategory(Category category) { this.category = category; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public String getEdition() { return edition; }
-    public void setEdition(String edition) { this.edition = edition; }
+    public String getDescription() {
+        return description;
+    }
 
-    public Publisher getPublisher() { return publisher; }
-    public void setPublisher(Publisher publisher) { this.publisher = publisher; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getEdition() {
+        return edition;
+    }
+
+    public void setEdition(String edition) {
+        this.edition = edition;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
 }
