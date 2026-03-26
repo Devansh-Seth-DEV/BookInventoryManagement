@@ -1,5 +1,7 @@
 package com.bookinventory.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,8 +24,8 @@ public class BookCondition {
     @Column(name = "FullDescription", length = 255)
     private String fullDescription;
 
-    @Column(name = "Price")
-    private Double price;
+    @Column(name = "Price", precision = 12, scale = 2)
+    private BigDecimal price = new BigDecimal("30.00");
 
     public BookCondition() {
     }
@@ -32,7 +34,7 @@ public class BookCondition {
             Integer ranks,
             String description,
             String fullDescription,
-            Double price
+            BigDecimal price
     ) {
         this.ranks = ranks;
         this.description = description;
@@ -64,11 +66,11 @@ public class BookCondition {
         this.fullDescription = fullDescription;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }
