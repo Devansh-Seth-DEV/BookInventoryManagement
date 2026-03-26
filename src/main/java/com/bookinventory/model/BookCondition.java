@@ -24,7 +24,11 @@ public class BookCondition {
     @Column(name = "FullDescription", length = 255)
     private String fullDescription;
 
-    @Column(name = "Price", precision = 12, scale = 2)
+    @Column(
+    	name = "Price", 
+    	precision = 12, 
+    	scale = 2
+    )
     private BigDecimal price = new BigDecimal("30.00");
 
     public BookCondition() {

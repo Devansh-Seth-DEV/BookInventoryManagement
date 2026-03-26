@@ -17,19 +17,35 @@ public class User {
 	@Column(name = "UserID")
 	private Integer userId;
 	
-	@Column(name = "FirstName", length = 20, nullable = false)
+	@Column(
+		name = "FirstName", 
+		length = 20, 
+		nullable = false
+	)
 	private String firstName;
 	
-	@Column(name = "LastName", length = 30, nullable = false)
+	@Column(
+		name = "LastName", 
+		length = 30, 
+		nullable = false
+	)
 	private String lastName;
 	
 	@Column(name = "PhoneNumber", length = 14)
 	private String phoneNumber;
 	
-	@Column(name = "UserName", length = 30, nullable = false)
+	@Column(
+		name = "UserName", 
+		length = 30, 
+		nullable = false
+	)
 	private String userName;
 	
-	@Column(name = "Password", length = 30, nullable = false)
+	@Column(
+		name = "Password", 
+		length = 30, 
+		nullable = false
+	)
 	private String password;
 	
 	@ManyToOne
@@ -65,7 +81,13 @@ public class User {
 		String password,
 		PermRole permRole
 	) {
-		this(0, firstName, lastName, phoneNumber, userName, password, permRole);
+		this(0,
+			firstName, 
+			lastName, 
+			phoneNumber, 
+			userName, 
+			password, 
+			permRole);
 	}
 
 	public Integer getUserId() {

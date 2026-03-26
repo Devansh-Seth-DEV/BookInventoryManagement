@@ -14,12 +14,20 @@ import jakarta.persistence.Table;
 public class BookReview {
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "ISBN", referencedColumnName = "ISBN", columnDefinition = "CHAR(13)")
+	@JoinColumn(
+		name = "ISBN", 
+		referencedColumnName = "ISBN", 
+		columnDefinition = "CHAR(13)"
+	)
 	private Book book;
 	
 	@Id
-	@Column(name = "ReviewerID")
-	private Integer reviewerID;
+    @ManyToOne
+    @JoinColumn(
+    	name = "ReviewerID", 
+    	referencedColumnName = "ReviewerID"
+    )
+    private Reviewer reviewer;
 
 	@Column(name = "Rating")
 	private Integer rating;
@@ -33,12 +41,12 @@ public class BookReview {
 
 	public BookReview(
 		Book book, 
-		Integer reviewerID, 
+		Reviewer reviewer, 
 		Integer rating, 
 		String comments
 	) {
 		this.book = book;
-		this.reviewerID = reviewerID;
+		this.reviewer = reviewer;
 		this.rating = rating;
 		this.comments = comments;
 	}
@@ -51,12 +59,12 @@ public class BookReview {
 		this.book = book;
 	}
 
-	public Integer getReviewerID() {
-		return reviewerID;
+	public Reviewer getReviewer() {
+		return reviewer;
 	}
 
-	public void setReviewerID(Integer reviewerID) {
-		this.reviewerID = reviewerID;
+	public void setReviewerID(Reviewer reviewer) {
+		this.reviewer = reviewer;
 	}
 
 	public Integer getRating() {

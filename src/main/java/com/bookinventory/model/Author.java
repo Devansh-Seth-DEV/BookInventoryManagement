@@ -15,10 +15,18 @@ public class Author {
     @Column(name = "authorID")
     private Integer authorID;
 
-    @Column(name = "LastName", nullable = false, length = 50)
+    @Column(
+    	name = "LastName", 
+    	nullable = false,
+    	length = 50
+    )
     private String lastName;
 
-    @Column(name = "FirstName", nullable = false, length = 50)
+    @Column(
+    	name = "FirstName", 
+    	nullable = false, 
+    	length = 50
+    )
     private String firstName;
 
     @Column(name = "Photo", length = 1)
@@ -27,13 +35,22 @@ public class Author {
     public Author() {
     }
 
-    public Author(String lastName, String firstName, String photo) {
+    public Author(
+    	String lastName, 
+    	String firstName, 
+    	String photo
+    ) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.photo = photo;
     }
 
-    public Author(Integer authorID, String lastName, String firstName, String photo) {
+    public Author(
+    	Integer authorID, 
+    	String lastName, 
+    	String firstName, 
+    	String photo
+    ) {
         this.authorID = authorID;
         this.lastName = lastName;
         this.firstName = firstName;
