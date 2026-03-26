@@ -3,16 +3,20 @@ package com.bookinventory.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "bookreview")
+@IdClass(BookReviewId.class)
 public class BookReview {
-
 	@Id
-	@Column(name = "ISBN", length = 13)
-	private String isbn;
-
+	@ManyToOne
+	@JoinColumn(name = "ISBN", referencedColumnName = "ISBN", columnDefinition = "CHAR(13)")
+	private Book book;
+	
 	@Id
 	@Column(name = "ReviewerID")
 	private Integer reviewerID;
@@ -27,19 +31,19 @@ public class BookReview {
 		
 	}
 
-	public BookReview(String isbn, Integer reviewerID, Integer rating, String comments) {
-		this.isbn = isbn;
+	public BookReview(Book book, Integer reviewerID, Integer rating, String comments) {
+		this.book = book;
 		this.reviewerID = reviewerID;
 		this.rating = rating;
 		this.comments = comments;
 	}
 
-	public String getIsbn() {
-		return isbn;
+	public Book getBook() {
+		return book;
 	}
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 	public Integer getReviewerID() {
