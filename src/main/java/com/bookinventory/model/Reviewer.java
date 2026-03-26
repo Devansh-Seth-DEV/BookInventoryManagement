@@ -10,13 +10,16 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "reviewer")
 public class Reviewer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ReviewerID")
     private Integer reviewerId;
 
-    @Column(name = "Name", nullable = false, length = 20)
+    @Column(
+    	name = "Name", 
+    	nullable = false, 
+    	length = 20
+    )
     private String name;
 
     @Column(name = "EmployedBy", length = 30)
@@ -26,9 +29,9 @@ public class Reviewer {
     }
 
     public Reviewer(
-            Integer reviewerId,
-            String name,
-            String employedBy
+    	Integer reviewerId,
+        String name,
+        String employedBy
     ) {
         this.reviewerId = reviewerId;
         this.name = name;

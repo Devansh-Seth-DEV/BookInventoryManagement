@@ -33,10 +33,10 @@ public class Inventory {
     }
 
     public Inventory(
-            Integer inventoryId,
-            Book book,
-            BookCondition bookCondition,
-            Boolean purchased
+    	Integer inventoryId,
+    	Book book,
+    	BookCondition bookCondition,
+    	Boolean purchased
     ) {
         this.inventoryId = inventoryId;
         this.book = book;

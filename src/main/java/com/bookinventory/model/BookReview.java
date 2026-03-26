@@ -36,7 +36,6 @@ public class BookReview {
 	private String comments;
 
 	public BookReview() {
-		
 	}
 
 	public BookReview(
