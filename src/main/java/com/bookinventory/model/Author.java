@@ -88,6 +88,8 @@ public class Author {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
+
 }
 
 

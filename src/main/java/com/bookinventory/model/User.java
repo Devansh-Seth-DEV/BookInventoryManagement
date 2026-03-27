@@ -145,4 +145,7 @@ public class User {
 	public void setPermRole(PermRole permRole) {
 		this.permRole = permRole;
 	}
+
+
+
 }
