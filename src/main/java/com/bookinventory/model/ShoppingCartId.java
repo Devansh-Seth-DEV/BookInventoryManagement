@@ -11,27 +11,8 @@ public class ShoppingCartId implements Serializable {
     public ShoppingCartId() {
     }
 
-    public ShoppingCartId(
-            Integer userId,
-            String isbn
-    ) {
+    public ShoppingCartId(Integer userId, String isbn) {
         this.userId = userId;
-        this.isbn = isbn;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 

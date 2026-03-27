@@ -1,6 +1,5 @@
 package com.bookinventory.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -12,59 +11,28 @@ import jakarta.persistence.Table;
 @Table(name = "shoppingcart")
 @IdClass(ShoppingCartId.class)
 public class ShoppingCart {
-
-    @Id
-    @Column(name = "UserID")
-    private Integer userId;
-
-    @Id
-    @Column(name = "ISBN", length = 13)
-    private String isbn;
-
+	@Id
     @ManyToOne
-    @JoinColumn(
-            name = "UserID", 
-            insertable = false, 
-            updatable = false
-    )
+    @JoinColumn(name = "UserID")
     private User user;
 
+	@Id
     @ManyToOne
-    @JoinColumn(
-            name = "ISBN", 
-            insertable = false, 
-            updatable = false
-    )
+    @JoinColumn(name = "ISBN")
     private Book book;
 
     public ShoppingCart() {
     }
+    
 
-    public ShoppingCart(
-            Integer userId,
-            String isbn
-    ) {
-        this.userId = userId;
-        this.isbn = isbn;
-    }
+    public ShoppingCart(User user, Book book) {
+		super();
+		this.user = user;
+		this.book = book;
+	}
 
-    public Integer getUserId() {
-        return userId;
-    }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public User getUser() {
+	public User getUser() {
         return user;
     }
 
