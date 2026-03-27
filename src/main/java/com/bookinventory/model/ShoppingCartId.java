@@ -5,18 +5,15 @@ import java.util.Objects;
 
 public class ShoppingCartId implements Serializable {
 
-    private Integer user;
-    private String book;
+    private Integer userId;
+    private String isbn;
 
     public ShoppingCartId() {
     }
 
-    public ShoppingCartId(
-            Integer user,
-            String book
-    ) {
-        this.user = user;
-        this.book = book;
+    public ShoppingCartId(Integer userId, String isbn) {
+        this.userId = userId;
+        this.isbn = isbn;
     }
 
     @Override
@@ -28,12 +25,12 @@ public class ShoppingCartId implements Serializable {
             return false;
         }
         ShoppingCartId that = (ShoppingCartId) o;
-        return Objects.equals(user, that.user) && 
-               Objects.equals(book, that.book);
+        return Objects.equals(userId, that.userId) && 
+               Objects.equals(isbn, that.isbn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, book);
+        return Objects.hash(userId, isbn);
     }
 }

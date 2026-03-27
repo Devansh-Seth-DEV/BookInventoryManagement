@@ -11,29 +11,28 @@ import jakarta.persistence.Table;
 @Table(name = "shoppingcart")
 @IdClass(ShoppingCartId.class)
 public class ShoppingCart {
-
-    @Id
+	@Id
     @ManyToOne
     @JoinColumn(name = "UserID")
     private User user;
 
-    @Id
+	@Id
     @ManyToOne
     @JoinColumn(name = "ISBN")
     private Book book;
 
     public ShoppingCart() {
     }
+    
 
-    public ShoppingCart(
-            User user,
-            Book book
-    ) {
-        this.user = user;
-        this.book = book;
-    }
+    public ShoppingCart(User user, Book book) {
+		super();
+		this.user = user;
+		this.book = book;
+	}
 
-    public User getUser() {
+
+	public User getUser() {
         return user;
     }
 
