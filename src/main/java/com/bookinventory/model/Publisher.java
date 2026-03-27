@@ -12,36 +12,44 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="publisher")
 public class Publisher {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="PublisherId")
 	Integer publisherId;
 	
-	@Column(name="Name", nullable = false, length=50)
+	@Column(
+		name="Name", 
+		nullable = false, 
+		length=50
+	)
 	String name;
 	
 	@Column(name="City", length=30)
 	String city;
 	
-	 // Foreign key mapping
     @ManyToOne
     @JoinColumn(name = "StateCode")
     private State stateCode;
     
-    // Default Constructors
     public Publisher() {}
 
-    // Parameterized Constructor
-    public Publisher(Integer publisherId, String name, String city, State stateCode) {
+    public Publisher(
+    	Integer publisherId, 
+    	String name, 
+    	String city, 
+    	State stateCode
+    ) {
         this.publisherId = publisherId;
         this.name = name;
         this.city = city;
         this.stateCode = stateCode;
     }
     
-    // Parameterized Constructor without publisherId
-	public Publisher(String name, String city, State stateCode) {
+	public Publisher(
+		String name, 
+		String city, 
+		State stateCode
+	) {
 		this(0, name, city, stateCode); 
 	}
 
