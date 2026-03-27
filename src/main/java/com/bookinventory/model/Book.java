@@ -12,7 +12,9 @@ import jakarta.persistence.Table;
 public class Book {
 
     @Id
-    @Column(name = "ISBN", length = 13)
+    @Column(name = "ISBN",
+            length = 13
+    )
     private String isbn;
 
     @Column(
@@ -22,18 +24,26 @@ public class Book {
     )
     private String title;
 
-    @Column(name = "Description", length = 100)
+    @Column(name = "Description",
+            length = 100
+    )
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "Category")
     private Category category;
 
-    @Column(name = "Edition", length = 30)
+    @Column(
+            name = "Edition",
+            length = 30
+    )
     private String edition;
 
     @ManyToOne
-    @JoinColumn(name = "PublisherID")
+    @JoinColumn(
+            name = "PublisherID",
+            nullable = false
+    )
     private Publisher publisher;
 
     public Book() {
