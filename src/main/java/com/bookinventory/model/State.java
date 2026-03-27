@@ -2,7 +2,6 @@ package com.bookinventory.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
 @Table(name="state")

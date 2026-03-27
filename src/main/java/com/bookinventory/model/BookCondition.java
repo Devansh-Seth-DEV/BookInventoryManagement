@@ -1,7 +1,6 @@
 package com.bookinventory.model;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
