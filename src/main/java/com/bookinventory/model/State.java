@@ -1,9 +1,6 @@
 package com.bookinventory.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="state")
@@ -14,6 +11,10 @@ public class State {
 
     @Column(name="StateName", length = 50)
     private String stateName;
+
+//    @OneToMany(mappedBy = "state")
+//    @Column(name="")
+
 
     public State() {
     }

@@ -15,17 +15,20 @@ public class Publisher {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="PublisherId")
-	Integer publisherId;
+	private Integer publisherId;
 	
 	@Column(
 		name="Name", 
 		nullable = false, 
 		length=50
 	)
-	String name;
+	private String name;
 	
-	@Column(name="City", length=30)
-	String city;
+	@Column(
+			name="City",
+			length=30
+	)
+	private String city;
 	
     @ManyToOne
     @JoinColumn(name = "StateCode")
