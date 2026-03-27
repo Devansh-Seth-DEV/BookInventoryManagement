@@ -39,8 +39,6 @@ public class BookCondition {
     )
     private BigDecimal price = new BigDecimal("30.00");
 
-    @OneToMany(mappedBy = "condition")
-    private List<Inventory> inventories;
 
     public BookCondition() {
     }

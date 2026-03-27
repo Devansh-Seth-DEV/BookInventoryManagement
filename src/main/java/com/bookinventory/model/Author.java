@@ -35,9 +35,6 @@ public class Author {
     @Column(name = "Photo", length = 1)
     private String photo;
 
-    @OneToMany(mappedBy = "author")
-    private List<BookAuthor> books;
-
     public Author() {
     }
 
@@ -94,6 +91,8 @@ public class Author {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
+
 }
 
 

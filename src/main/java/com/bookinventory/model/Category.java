@@ -22,9 +22,6 @@ public class Category {
     @Column(name = "CatDescription", length = 24)
     private String catDescription;
 
-    @OneToMany(mappedBy = "category")
-    private List<Book> books;
-
     public Category() {}
 
     public Category(Integer catId, String catDescription) {
@@ -48,11 +45,4 @@ public class Category {
         this.catDescription = catDescription;
     }
 
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
 }

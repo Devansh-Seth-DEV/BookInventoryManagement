@@ -28,11 +28,6 @@ public class Reviewer {
     @Column(name = "EmployedBy", length = 30)
     private String employedBy;
 
-    @OneToMany(mappedBy = "reviewer")
-    private List<BookReview> reviews;
-
-
-
     public Reviewer() {
     }
 

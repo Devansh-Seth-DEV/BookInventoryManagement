@@ -20,9 +20,6 @@ public class PermRole {
 	
 	@Column(name = "PermRole", length = 30)
 	private String permRole;
-
-	@OneToMany(mappedBy = "role")
-	private List<User> users;
 	
 	public PermRole() {}
 	

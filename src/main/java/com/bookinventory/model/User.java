@@ -54,12 +54,6 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "RoleNumber")
 	private PermRole permRole;
-
-	@OneToMany(mappedBy = "user")
-	private List<PurchaseLog> purchaseLogs;
-
-	@OneToMany(mappedBy = "user")
-	private List<ShoppingCart> cartItems;
 	
 	public User() {}
 
@@ -155,11 +149,6 @@ public class User {
 		this.permRole = permRole;
 	}
 
-	public List<PurchaseLog> getPurchaseLogs() {
-		return purchaseLogs;
-	}
 
-	public void setPurchaseLogs(List<PurchaseLog> purchaseLogs) {
-		this.purchaseLogs = purchaseLogs;
-	}
+
 }

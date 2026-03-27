@@ -36,9 +36,6 @@ public class Publisher {
     @ManyToOne
     @JoinColumn(name = "StateCode")
     private State stateCode;
-
-	@OneToMany(mappedBy = "publisher")
-	private List<Book> books;
     
     public Publisher() {}
 

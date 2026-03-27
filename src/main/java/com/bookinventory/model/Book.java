@@ -49,16 +49,6 @@ public class Book {
     )
     private Publisher publisher;
 
-    @OneToMany(mappedBy = "book")
-    private List<BookAuthor> authors;
-
-    @OneToMany(mappedBy = "book")
-    private List<BookReview> reviews;
-
-    @OneToMany(mappedBy = "book")
-    private List<Inventory> inventories;
-
-
     public Book() {
     }
 
