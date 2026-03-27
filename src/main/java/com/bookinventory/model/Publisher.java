@@ -8,6 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity
 @Table(name="publisher")
@@ -33,6 +36,9 @@ public class Publisher {
     @ManyToOne
     @JoinColumn(name = "StateCode")
     private State stateCode;
+
+	@OneToMany(mappedBy = "publisher")
+	private List<Book> books;
     
     public Publisher() {}
 

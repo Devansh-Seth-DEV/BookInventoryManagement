@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity
 @Table(name = "permrole")
@@ -17,6 +20,9 @@ public class PermRole {
 	
 	@Column(name = "PermRole", length = 30)
 	private String permRole;
+
+	@OneToMany(mappedBy = "role")
+	private List<User> users;
 	
 	public PermRole() {}
 	

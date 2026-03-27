@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity
 @Table(name = "reviewer")
@@ -24,6 +27,11 @@ public class Reviewer {
 
     @Column(name = "EmployedBy", length = 30)
     private String employedBy;
+
+    @OneToMany(mappedBy = "reviewer")
+    private List<BookReview> reviews;
+
+
 
     public Reviewer() {
     }

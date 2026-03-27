@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity
 @Table(name = "category")
@@ -18,6 +21,9 @@ public class Category {
 
     @Column(name = "CatDescription", length = 24)
     private String catDescription;
+
+    @OneToMany(mappedBy = "category")
+    private List<Book> books;
 
     public Category() {}
 
@@ -40,5 +46,13 @@ public class Category {
 
     public void setCatDescription(String catDescription) {
         this.catDescription = catDescription;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

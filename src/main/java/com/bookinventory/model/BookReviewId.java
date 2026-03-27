@@ -5,13 +5,13 @@ import java.util.Objects;
 
 public class BookReviewId implements Serializable {
     private String book; 
-    private Integer reviewerID; 
+    private Integer reviewer;
 
     public BookReviewId() {}
 
-    public BookReviewId(String book, Integer reviewerID) {
+    public BookReviewId(String book, Integer reviewer) {
         this.book = book;
-        this.reviewerID = reviewerID;
+        this.reviewer = reviewer;
     }
 
     @Override
@@ -22,11 +22,11 @@ public class BookReviewId implements Serializable {
 
         BookReviewId that = (BookReviewId) other;
         return Objects.equals(book, that.book) &&
-        	   Objects.equals(reviewerID, that.reviewerID);
+        	   Objects.equals(reviewer, that.reviewer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(book, reviewerID);
+        return Objects.hash(book, reviewer);
     }
 }

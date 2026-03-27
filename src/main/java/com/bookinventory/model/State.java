@@ -2,6 +2,8 @@ package com.bookinventory.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="state")
 public class State {
@@ -12,8 +14,8 @@ public class State {
     @Column(name="StateName", length = 50)
     private String stateName;
 
-//    @OneToMany(mappedBy = "state")
-//    @Column(name="")
+   @OneToMany(mappedBy = "state")
+   private List<Publisher> publishers;
 
 
     public State() {

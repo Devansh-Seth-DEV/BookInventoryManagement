@@ -8,6 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -51,6 +54,12 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "RoleNumber")
 	private PermRole permRole;
+
+	@OneToMany(mappedBy = "user")
+	private List<PurchaseLog> purchaseLogs;
+
+	@OneToMany(mappedBy = "user")
+	private List<ShoppingCart> cartItems;
 	
 	public User() {}
 
@@ -144,5 +153,13 @@ public class User {
 
 	public void setPermRole(PermRole permRole) {
 		this.permRole = permRole;
+	}
+
+	public List<PurchaseLog> getPurchaseLogs() {
+		return purchaseLogs;
+	}
+
+	public void setPurchaseLogs(List<PurchaseLog> purchaseLogs) {
+		this.purchaseLogs = purchaseLogs;
 	}
 }

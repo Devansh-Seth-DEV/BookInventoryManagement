@@ -1,6 +1,7 @@
 package com.bookinventory.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
 
 @Entity
 @Table(name = "bookcondition")
@@ -18,10 +20,16 @@ public class BookCondition {
     @Column(name = "Ranks")
     private Integer ranks;
 
-    @Column(name = "Description", length = 50)
+    @Column(
+            name = "Description",
+            length = 50
+    )
     private String description;
 
-    @Column(name = "FullDescription", length = 255)
+    @Column(
+            name = "FullDescription",
+            length = 255
+    )
     private String fullDescription;
 
     @Column(
@@ -30,6 +38,9 @@ public class BookCondition {
     	scale = 2
     )
     private BigDecimal price = new BigDecimal("30.00");
+
+    @OneToMany(mappedBy = "condition")
+    private List<Inventory> inventories;
 
     public BookCondition() {
     }

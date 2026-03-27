@@ -6,6 +6,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -45,6 +48,16 @@ public class Book {
             nullable = false
     )
     private Publisher publisher;
+
+    @OneToMany(mappedBy = "book")
+    private List<BookAuthor> authors;
+
+    @OneToMany(mappedBy = "book")
+    private List<BookReview> reviews;
+
+    @OneToMany(mappedBy = "book")
+    private List<Inventory> inventories;
+
 
     public Book() {
     }

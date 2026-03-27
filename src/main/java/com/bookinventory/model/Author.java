@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity
 @Table(name = "author")
@@ -31,6 +34,9 @@ public class Author {
 
     @Column(name = "Photo", length = 1)
     private String photo;
+
+    @OneToMany(mappedBy = "author")
+    private List<BookAuthor> books;
 
     public Author() {
     }
