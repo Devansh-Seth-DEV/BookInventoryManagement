@@ -1,14 +1,14 @@
 package com.bookinventory.dto;
 
-public class LoginResponse {
+public class LoginResponseDTO {
 
     private String token;
     private String message;
 
-    public LoginResponse() {
+    public LoginResponseDTO() {
     }
 
-    public LoginResponse(String token, String message) {
+    public LoginResponseDTO(String token, String message) {
         this.token = token;
         this.message = message;
     }
