@@ -106,10 +106,10 @@ class BookControllerTest {
 	}
 	
 	@Test
-	public void testGetBookByIdWithDetails_Success() throws Exception {
-		log.info("Testing getBookByIdWithDetails(String isbn) for 200 OK Status");
+	public void testGetBookWithDetailsById_Success() throws Exception {
+		log.info("Testing getBookWithDetailsById(String isbn) for 200 OK Status");
 		
-		when(bookService.getBookDetails(mockBook.getIsbn()))
+		when(bookService.getBookDetailsByIsbn(mockBook.getIsbn()))
 		.thenReturn(mockBook);
 		
 		mockMvc.perform(
@@ -127,11 +127,11 @@ class BookControllerTest {
 
 	@Test
 	public void testGetBookByIdWithDetails_NotFound() throws Exception {
-		log.info("Testing getBookByIdWithDetails(String isbn) for 404-Not Found Status");
+		log.info("Testing getBookWithDetailsById(String isbn) for 404-Not Found Status");
 		
 		String bookIsbn = "1-000-10000-0";
 		String message = "Book with ISBN " + bookIsbn + " was not found.";
-		when(bookService.getBookDetails(bookIsbn))
+		when(bookService.getBookDetailsByIsbn(bookIsbn))
 	           .thenThrow(new ResourceNotFoundException(message));
 
 	    mockMvc.perform(

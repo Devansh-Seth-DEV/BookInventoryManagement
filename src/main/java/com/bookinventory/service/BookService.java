@@ -7,5 +7,5 @@ import com.bookinventory.model.Book;
 public interface BookService {
 	List<Book> getAllBooks();
 	
-	Book getBookDetails(String bookIsbn);
+	Book getBookDetailsByIsbn(String bookIsbn);
 }

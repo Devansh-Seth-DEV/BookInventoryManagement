@@ -38,7 +38,7 @@ public class BookServiceImpl
 	}
 
 	@Override
-	public Book getBookDetails(String bookIsbn) {
+	public Book getBookDetailsByIsbn(String bookIsbn) {
 		log.info("Fetching book with ISBN %s from the book repository"
 				.formatted(bookIsbn));
 		

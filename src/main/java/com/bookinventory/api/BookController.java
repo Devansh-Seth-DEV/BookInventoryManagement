@@ -47,13 +47,13 @@ public class BookController {
 	}
 	
 	@GetMapping("/{isbn}")
-	public ResponseEntity<BookResponseDTO> getBookByIdWithDetails(
+	public ResponseEntity<BookResponseDTO> getBookWithDetailsById(
 				@PathVariable("isbn") String bookIsbn
 			) {
 		log.info("Requesting Endpoint(/api/books/%s) to fetch book with ISBN %s"
 				.formatted(bookIsbn, bookIsbn));
 		
-		Book book = bookService.getBookDetails(bookIsbn);
+		Book book = bookService.getBookDetailsByIsbn(bookIsbn);
 		BookResponseDTO responseBody = BookResponseConverter.convert(book);
 		
 		return new ResponseEntity<>(responseBody, HttpStatus.OK);
