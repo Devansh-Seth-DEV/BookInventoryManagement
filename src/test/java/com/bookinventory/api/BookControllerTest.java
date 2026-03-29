@@ -12,6 +12,7 @@ import java.util.Stack;
 
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.bookinventory.exception.ResourceNotFoundException;
 import com.bookinventory.model.Book;
+import com.bookinventory.model.Category;
 import com.bookinventory.model.Publisher;
 import com.bookinventory.model.State;
 import com.bookinventory.service.BookService;
@@ -52,7 +54,12 @@ class BookControllerTest {
 		p.setCity("Rochester");
 		p.setState(new State("NY", "New York".toUpperCase()));
 
+		Category c = new Category();
+		c.setCatId(1);
+		c.setCatDescription("Romance");
+
 		mockBook.setPublisher(p);
+		mockBook.setCategory(c);
 	}
 	
 	@Test
@@ -88,6 +95,47 @@ class BookControllerTest {
 
 	    mockMvc.perform(
 					get("/api/books/")
+					.contentType(MediaType.APPLICATION_JSON)
+	    		)
+	            .andExpect(status().isNotFound())
+	            .andExpect(jsonPath("$.message").value(message))
+	            .andExpect(jsonPath("$.status").value(404))
+	            .andDo(result -> 
+	            	log.error("Test Result: " + result.getResponse().getContentAsString())
+	            );
+	}
+	
+	@Test
+	public void testGetBookWithDetailsById_Success() throws Exception {
+		log.info("Testing getBookWithDetailsById(String isbn) for 200 OK Status");
+		
+		when(bookService.getBookDetailsByIsbn(mockBook.getIsbn()))
+		.thenReturn(mockBook);
+		
+		mockMvc.perform(
+				get("/api/books/1-111-11111-4")
+				.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.isbn").value("1-111-11111-4"))
+            .andExpect(jsonPath("$.edition").value("4"))
+            .andExpect(jsonPath("$.categoryName").value("Romance"))
+            .andDo(result -> 
+            	log.info("Test Result: " + result.getResponse().getContentAsString())
+            );
+	}
+
+	@Test
+	public void testGetBookByIdWithDetails_NotFound() throws Exception {
+		log.info("Testing getBookWithDetailsById(String isbn) for 404-Not Found Status");
+		
+		String bookIsbn = "1-000-10000-0";
+		String message = "Book with ISBN " + bookIsbn + " was not found.";
+		when(bookService.getBookDetailsByIsbn(bookIsbn))
+	           .thenThrow(new ResourceNotFoundException(message));
+
+	    mockMvc.perform(
+					get("/api/books/" + bookIsbn)
 					.contentType(MediaType.APPLICATION_JSON)
 	    		)
 	            .andExpect(status().isNotFound())

@@ -6,4 +6,6 @@ import com.bookinventory.model.Book;
 
 public interface BookService {
 	List<Book> getAllBooks();
+	
+	Book getBookDetailsByIsbn(String bookIsbn);
 }
