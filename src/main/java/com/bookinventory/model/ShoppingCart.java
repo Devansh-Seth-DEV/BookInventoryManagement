@@ -25,7 +25,10 @@ public class ShoppingCart {
     }
     
 
-    public ShoppingCart(User user, Book book) {
+    public ShoppingCart(
+    		User user,
+    		Book book
+    ) {
 		super();
 		this.user = user;
 		this.book = book;
