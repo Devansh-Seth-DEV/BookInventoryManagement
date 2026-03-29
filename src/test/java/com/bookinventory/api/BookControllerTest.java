@@ -63,7 +63,6 @@ class BookControllerTest {
 	}
 	
 	@Test
-	@Disabled
 	void testGetAllBooks_Success() throws Exception {
 		log.info("Testing getAllBooks() for 200-OK Status");
 	
@@ -87,7 +86,6 @@ class BookControllerTest {
 	}
 
 	@Test
-	@Disabled
 	public void testGetAllBooks_NotFound() throws Exception {
 		log.info("Testing getAllBooks() for 404-Not Found Status");
 		
