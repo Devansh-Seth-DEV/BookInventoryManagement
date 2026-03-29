@@ -3,6 +3,7 @@ package com.bookinventory.api;
 
 import com.bookinventory.dto.AvailableInventoryResponseDTO;
 import com.bookinventory.service.InventoryService;
+import com.bookinventory.service.InventoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class InventoryController {
     @GetMapping("/available")
     public ResponseEntity<List<AvailableInventoryResponseDTO>> getAvailableInventory(){
         List<AvailableInventoryResponseDTO> availableInventory = inventoryService.getAvailableInventory();
-        return new ResponseEntity<List<AvailableInventoryResponseDTO>>(availableInventory, HttpStatus.OK);
+        return new ResponseEntity<>(availableInventory, HttpStatus.OK);
     }
 
 }

@@ -1,16 +1,18 @@
 package com.bookinventory.dto;
 
+import java.math.BigDecimal;
+
 public class AvailableInventoryResponseDTO {
 
     private String isbn;
     private String bookTitle;
     private String conditionDescription;
-    private Double price;
+    private BigDecimal price;
 
     public AvailableInventoryResponseDTO(String isbn,
                                          String bookTitle,
                                          String conditionDescription,
-                                         Double price
+                                         BigDecimal price
     ) {
         this.isbn = isbn;
         this.bookTitle = bookTitle;
@@ -45,11 +47,11 @@ public class AvailableInventoryResponseDTO {
         this.conditionDescription = conditionDescription;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

@@ -4,15 +4,12 @@ import com.bookinventory.dto.AvailableInventoryResponseDTO;
 import com.bookinventory.model.Inventory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
-    @Query("SELECT new com.example.dto.AvailableInventoryResponseDTO(" +
-            "b.isbn, b.title, bc.description, i.price) " +
-            "FROM Inventory i " +
-            "JOIN i.book b " +
-            "JOIN i.bookCondition bc " +
-            "WHERE i.purchased = 0")
-    List<AvailableInventoryResponseDTO> findAvailableInventory();
+    @Query("SELECT i FROM Inventory i JOIN FETCH i.book b JOIN FETCH i.bookCondition bc WHERE i.purchased = false")
+    List<Inventory> findAvailableInventory();
 }
