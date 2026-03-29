@@ -9,11 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookinventory.dto.AllBookResponseDTO;
+import com.bookinventory.dto.BookResponseDTO;
 import com.bookinventory.dto.converter.AllBookResponseConverter;
+import com.bookinventory.dto.converter.BookResponseConverter;
 import com.bookinventory.model.Book;
 import com.bookinventory.service.BookService;
 
@@ -39,6 +42,19 @@ public class BookController {
 		List<AllBookResponseDTO> responseBody = books.stream()
 				.map(AllBookResponseConverter::convert)
 				.collect(Collectors.toList());
+		
+		return new ResponseEntity<>(responseBody, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{isbn}")
+	public ResponseEntity<BookResponseDTO> getBookByIdWithDetails(
+				@PathVariable("isbn") String bookIsbn
+			) {
+		log.info("Requesting Endpoint(/api/books/%s) to fetch book with ISBN %s"
+				.formatted(bookIsbn, bookIsbn));
+		
+		Book book = bookService.getBookDetails(bookIsbn);
+		BookResponseDTO responseBody = BookResponseConverter.convert(book);
 		
 		return new ResponseEntity<>(responseBody, HttpStatus.OK);
 	}
