@@ -4,6 +4,7 @@ package com.bookinventory.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.bookinventory.dto.UserResponseDTO;
 import com.bookinventory.exception.ResourceNotFoundException;
 import com.bookinventory.model.User;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
          UserResponseDTO userDTO = userRepository.getUserProfileById(userId)
                  .orElseThrow(() -> {
                      logger.error("User not found with id: {}", userId);
-                     return new RuntimeException("User not found");
+                     return new ResourceNotFoundException("User with id: "+userId+" not found");
                  });
 
          logger.info("Successfully fetched user profile for userId: {}", userId);
