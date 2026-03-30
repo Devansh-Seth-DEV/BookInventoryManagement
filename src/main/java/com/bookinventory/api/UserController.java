@@ -19,12 +19,14 @@ public class UserController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-
-    @Autowired
     private UserService userService;
+    private ShoppingCartService shoppingCartService;
     
     @Autowired
-    private ShoppingCartService shoppingCartService;
+    public UserController(UserService userService, ShoppingCartService shoppingCartService) {
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
+    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDTO> getUserProfile(@PathVariable Integer userId) {
