@@ -1,7 +1,9 @@
 package com.bookinventory.service;
 
+import com.bookinventory.dto.InventoryResponseDTO;
 import com.bookinventory.dto.converter.AvailableInventoryResponseConverter;
 import com.bookinventory.dto.AvailableInventoryResponseDTO;
+import com.bookinventory.dto.converter.InventoryResponseConverter;
 import com.bookinventory.exception.ResourceNotFoundException;
 import com.bookinventory.model.Inventory;
 import com.bookinventory.repository.InventoryRepository;
@@ -37,4 +39,19 @@ public class InventoryServiceImpl implements InventoryService{
         log.info("Successfully fetched all the books from the book repository");
         return inventoryList.stream().map(availableInventoryResponseConverter::convert).toList();
     }
+    @Override
+    public InventoryResponseDTO getInventoryById(Integer inventoryId) {
+
+        log.info("Fetching details of a specific physical copy of a book");
+
+        Inventory inventory = inventoryRepository.findById(inventoryId)
+                .orElseThrow(() -> {
+                    String message = "Inventory not found with id: " + inventoryId;
+                    log.warn(message);
+                    return new ResourceNotFoundException(message);
+                });
+        log.info("Successfully fetched inventory details of a specific book");
+        return InventoryResponseConverter.convert(inventory);
+    }
+
 }
