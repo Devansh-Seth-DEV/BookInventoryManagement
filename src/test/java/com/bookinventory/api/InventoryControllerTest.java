@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.bookinventory.dto.AvailableInventoryResponseDTO;
 
-import com.bookinventory.exception.ResourceNotFoundException;
 import com.bookinventory.service.InventoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
