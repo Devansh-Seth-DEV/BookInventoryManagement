@@ -7,14 +7,27 @@ import com.bookinventory.model.Publisher;
 
 public class BookResponseConverter {
 	public static BookResponseDTO convert(Book book) {
+		String categoryDescription = null;
+		String publisherName = null;
+		String publisherCity = null;
+		
+		if (book.getCategory() != null) {
+			categoryDescription = book.getCategory().getCatDescription();
+		}
+		
+		if (book.getPublisher() != null) {
+			publisherName = book.getPublisher().getName();
+			publisherCity = book.getPublisher().getCity();
+		}
+
 		BookResponseDTO dto = new BookResponseDTO(
 					book.getIsbn(),
 					book.getTitle(),
 					book.getDescription(),
 					book.getEdition(),
-					book.getCategory().getCatDescription(),
-					book.getPublisher().getName(),
-					book.getPublisher().getCity()
+					categoryDescription,
+					publisherName,
+					publisherCity
 				);
 		
 		return dto;
