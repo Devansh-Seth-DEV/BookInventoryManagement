@@ -6,12 +6,17 @@ import com.bookinventory.model.Publisher;
 
 public class AllBookResponseConverter {
 	public static AllBookResponseDTO convert(Book book) {
+		String publisherName = null;
+		if (book.getPublisher() != null) {
+			publisherName = book.getPublisher().getName();
+		}
+		
 		AllBookResponseDTO dto = new AllBookResponseDTO(
 					book.getIsbn(),
 					book.getTitle(),
 					book.getDescription(),
 					book.getEdition(),
-					book.getPublisher().getName()
+					publisherName
 				);
 		return dto;
 	}
