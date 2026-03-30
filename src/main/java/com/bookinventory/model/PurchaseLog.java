@@ -31,7 +31,10 @@ public class PurchaseLog {
 		
 	}
 
-	public PurchaseLog(User user, Inventory inventory) {
+	public PurchaseLog(
+			User user,
+			Inventory inventory
+	) {
 		this.user = user;
 		this.inventory = inventory;
 	}

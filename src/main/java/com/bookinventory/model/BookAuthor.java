@@ -24,10 +24,13 @@ public class BookAuthor {
     @JoinColumn(name = "AuthorID")
     private Author author;
 
-    @Column(name = "PrimaryAuthor", length = 1)
+    @Column(name = "PrimaryAuthor", 
+    		length = 1)
     private String primaryAuthor;
 
-    public BookAuthor() {}
+    public BookAuthor() {
+    	
+    }
 
     public BookAuthor(Book book, Author author, String primaryAuthor) {
         this.book = book;

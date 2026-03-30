@@ -25,8 +25,8 @@ public class PurchaseLogId
         	return false;
 
         PurchaseLogId that = (PurchaseLogId) other;
-        return Objects.equals(user, that.user) &&
-        	   Objects.equals(inventory, that.user);
+        return Objects.equals(user, that.user) && 
+                Objects.equals(inventory, that.inventory);
     }
 
     @Override

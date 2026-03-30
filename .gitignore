@@ -56,3 +56,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Eclipse specific bin folder
+
+bin/
+
+/bin/
