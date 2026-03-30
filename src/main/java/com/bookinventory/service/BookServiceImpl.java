@@ -1,6 +1,7 @@
 package com.bookinventory.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,5 +35,22 @@ public class BookServiceImpl
 		
 		log.info("Successfully fetched all the books from the book repository");
 		return books;
+	}
+
+	@Override
+	public Book getBookDetailsByIsbn(String bookIsbn) {
+		log.info("Fetching book with ISBN %s from the book repository"
+				.formatted(bookIsbn));
+		
+		Optional<Book> optBook = bookRepo.findByIdWithDetails(bookIsbn); 
+		
+		if (optBook.isEmpty()) {
+			String message = "Book with ISBN " + bookIsbn + " not found.";
+			log.error(message);
+			throw new ResourceNotFoundException(message);
+		}
+		
+		log.info("Succesfully found details of book with ISBN " + bookIsbn);
+		return optBook.get();
 	}
 }
