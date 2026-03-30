@@ -19,8 +19,8 @@ public class UserController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private UserService userService;
-    private ShoppingCartService shoppingCartService;
+    private final UserService userService;
+    private final ShoppingCartService shoppingCartService;
     
     @Autowired
     public UserController(UserService userService, ShoppingCartService shoppingCartService) {
