@@ -47,7 +47,7 @@ public class ReviewerServiceImpl implements ReviewerService {
     }
     
     @Override
-    public List<AllBookReviewResponseDTO> getReviewsByBookIsbn(String isbn) {
+    public List<BookReview> getReviewsByBookIsbn(String isbn) {
         log.info("Fetching all reviews for Book ISBN: {}", isbn);
 
         List<BookReview> reviews = bookReviewRepository.findByBookIsbnWithDetails(isbn);
@@ -60,8 +60,7 @@ public class ReviewerServiceImpl implements ReviewerService {
 
         log.info("Successfully fetched {} reviews for ISBN: {}", reviews.size(), isbn);
 
-        return reviews.stream()
-                .map(AllBookReviewResponseConverter::convert)
-                .collect(Collectors.toList());
+        
+        return reviews; 
     }
 }

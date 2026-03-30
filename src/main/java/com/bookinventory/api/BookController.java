@@ -17,8 +17,10 @@ import com.bookinventory.dto.AllBookResponseDTO;
 import com.bookinventory.dto.AllBookReviewResponseDTO;
 import com.bookinventory.dto.BookResponseDTO;
 import com.bookinventory.dto.converter.AllBookResponseConverter;
+import com.bookinventory.dto.converter.AllBookReviewResponseConverter;
 import com.bookinventory.dto.converter.BookResponseConverter;
 import com.bookinventory.model.Book;
+import com.bookinventory.model.BookReview;
 import com.bookinventory.service.BookService;
 import com.bookinventory.service.ReviewerService;
 
@@ -26,17 +28,20 @@ import com.bookinventory.service.ReviewerService;
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
-	BookService bookService;
+	private final BookService bookService;
+	
+	private final  ReviewerService reviewerService;
 	
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 	
 	@Autowired
-	public BookController(BookService bookService) {
-		this.bookService = bookService;
+	public BookController(BookService bookService, ReviewerService reviewerService) {
+	    this.bookService = bookService;
+	    this.reviewerService= reviewerService;
 	}
 	
-	@Autowired
-	public ReviewerService reviewService;
+	
+	
 	
 	@GetMapping
 	public ResponseEntity<List<AllBookResponseDTO>> getAllBooks() {
@@ -65,10 +70,15 @@ public class BookController {
 	}
 	
 	@GetMapping("/{isbn}/reviews")
-	public ResponseEntity<List<AllBookReviewResponseDTO>> getBookReviews(
-	        @PathVariable String isbn
-	) {
-	    log.info("Received request for reviews of ISBN: {}", isbn);
-	    return ResponseEntity.ok(reviewService.getReviewsByBookIsbn(isbn));
-	}
+    public ResponseEntity<List<AllBookReviewResponseDTO>> getBookReviews(@PathVariable String isbn) {
+        log.info("Request received for reviews of ISBN: {}", isbn);
+        
+        List<BookReview> reviews = reviewerService.getReviewsByBookIsbn(isbn);
+        
+        List<AllBookReviewResponseDTO> dtos = reviews.stream()
+                .map(AllBookReviewResponseConverter::convert)
+                .collect(Collectors.toList());
+                
+        return ResponseEntity.ok(dtos);
+    }
 }
