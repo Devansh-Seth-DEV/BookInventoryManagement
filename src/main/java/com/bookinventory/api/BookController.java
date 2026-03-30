@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookinventory.dto.AllBookResponseDTO;
+import com.bookinventory.dto.AllBookReviewResponseDTO;
 import com.bookinventory.dto.BookResponseDTO;
 import com.bookinventory.dto.converter.AllBookResponseConverter;
 import com.bookinventory.dto.converter.BookResponseConverter;
 import com.bookinventory.model.Book;
 import com.bookinventory.service.BookService;
+import com.bookinventory.service.ReviewerService;
 
 
 @RestController
@@ -33,7 +35,10 @@ public class BookController {
 		this.bookService = bookService;
 	}
 	
-	@GetMapping("/")
+	@Autowired
+	public ReviewerService reviewService;
+	
+	@GetMapping
 	public ResponseEntity<List<AllBookResponseDTO>> getAllBooks() {
 		log.info("Requesting Endpoint(/api/books/) to fetch all books");
 		
@@ -57,5 +62,13 @@ public class BookController {
 		BookResponseDTO responseBody = BookResponseConverter.convert(book);
 		
 		return new ResponseEntity<>(responseBody, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{isbn}/reviews")
+	public ResponseEntity<List<AllBookReviewResponseDTO>> getBookReviews(
+	        @PathVariable String isbn
+	) {
+	    log.info("Received request for reviews of ISBN: {}", isbn);
+	    return ResponseEntity.ok(reviewService.getReviewsByBookIsbn(isbn));
 	}
 }
