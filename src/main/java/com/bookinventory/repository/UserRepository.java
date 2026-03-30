@@ -10,9 +10,18 @@ import com.bookinventory.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 	
-	@Query("SELECT new com.bookinventory.dto.UserResponseDTO(u.firstName, u.lastName, u.userName, u.phoneNumber, r.roleName) " +
-	           "FROM User u JOIN u.roleNumber r " +
-	           "WHERE u.userId = :userId")
-	Optional<UserResponseDTO> getUserProfileById(Integer userId);
 	
+	@Query("""
+	        SELECT 
+	            NEW com.bookinventory.dto.UserResponseDTO(
+	                u.firstName,
+	                u.lastName,
+	                u.userName,
+	                u.phoneNumber,
+	                r.permRole
+	            )
+	        FROM User u JOIN u.permRole r
+	        WHERE u.userId = :userId
+	        """)
+	Optional<UserResponseDTO> getUserProfileById(Integer userId);
 }
