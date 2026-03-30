@@ -1,6 +1,5 @@
 package com.bookinventory.api;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -8,11 +7,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
-import org.assertj.core.util.Arrays;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +24,7 @@ import com.bookinventory.model.Category;
 import com.bookinventory.model.Publisher;
 import com.bookinventory.model.State;
 import com.bookinventory.service.BookService;
+import com.bookinventory.service.ReviewerService;
 
 @WebMvcTest(BookController.class)
 class BookControllerTest {
@@ -36,12 +33,16 @@ class BookControllerTest {
 	
 	@MockitoBean
 	private BookService bookService;
+	
+	@MockitoBean
+	private ReviewerService reviewerService;
 
 	private static final Logger log = LoggerFactory.getLogger(BookControllerTest.class);
-	private Book mockBook;
+	private static Book mockBook;
+	private final String baseUrl = "/api/books";
 	
-	@BeforeEach
-	void setup() {
+	@BeforeAll
+	static void setup() {
 		mockBook = new Book();
 		mockBook.setIsbn("1-111-11111-4");
 		mockBook.setTitle("Women are From Venus ORACLE is from Beyond Pluto");
@@ -73,13 +74,13 @@ class BookControllerTest {
 		when(bookService.getAllBooks()).thenReturn(books);
 		
 		mockMvc.perform(
-				get("/api/books/")
+				get(baseUrl)
 				.contentType(MediaType.APPLICATION_JSON)
 			)
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$.length()").value(1))
-			.andExpect(jsonPath("$[0].isbn").value("1-111-11111-4"))
-            .andExpect(jsonPath("$[0].edition").value("4"))
+			.andExpect(jsonPath("$.length()").value(books.size()))
+			.andExpect(jsonPath("$[0].isbn").value(mockBook.getIsbn()))
+            .andExpect(jsonPath("$[0].edition").value(mockBook.getEdition()))
             .andDo(result -> 
             	log.info("Test Result: " + result.getResponse().getContentAsString())
             );
@@ -94,7 +95,7 @@ class BookControllerTest {
 	           .thenThrow(new ResourceNotFoundException(message));
 
 	    mockMvc.perform(
-					get("/api/books/")
+					get(baseUrl)
 					.contentType(MediaType.APPLICATION_JSON)
 	    		)
 	            .andExpect(status().isNotFound())
@@ -113,13 +114,16 @@ class BookControllerTest {
 		.thenReturn(mockBook);
 		
 		mockMvc.perform(
-				get("/api/books/1-111-11111-4")
+				get(baseUrl + "/" + mockBook.getIsbn())
 				.contentType(MediaType.APPLICATION_JSON)
 			)
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$.isbn").value("1-111-11111-4"))
-            .andExpect(jsonPath("$.edition").value("4"))
-            .andExpect(jsonPath("$.categoryName").value("Romance"))
+			.andExpect(jsonPath("$.isbn").value(mockBook.getIsbn()))
+            .andExpect(jsonPath("$.edition").value(mockBook.getEdition()))
+            .andExpect(
+            		jsonPath("$.categoryName")
+            		.value(mockBook.getCategory().getCatDescription())
+            )
             .andDo(result -> 
             	log.info("Test Result: " + result.getResponse().getContentAsString())
             );
@@ -135,7 +139,7 @@ class BookControllerTest {
 	           .thenThrow(new ResourceNotFoundException(message));
 
 	    mockMvc.perform(
-					get("/api/books/" + bookIsbn)
+					get(baseUrl + "/" + bookIsbn)
 					.contentType(MediaType.APPLICATION_JSON)
 	    		)
 	            .andExpect(status().isNotFound())
@@ -145,4 +149,54 @@ class BookControllerTest {
 	            	log.error("Test Result: " + result.getResponse().getContentAsString())
 	            );
 	}
+	
+	@Test
+	public void testGetAllBooksByCategory_Success() throws Exception {
+		log.info("Testing testGetAllBooksByCategory(Integer catId) for 200 OK Status");
+		
+		List<Book> books = new ArrayList<>();
+		books.add(mockBook);
+		
+		Integer catId = mockBook.getCategory().getCatId();
+
+		when(bookService.getAllBooksByCategoryId(catId))
+		.thenReturn(books);
+		
+		mockMvc.perform(
+				get(baseUrl + "/category/" + catId)
+				.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$[0].isbn").value(mockBook.getIsbn()))
+            .andExpect(jsonPath("$[0].edition").value(mockBook.getEdition()))
+            .andExpect(
+            		jsonPath("$[0].categoryDescription")
+            		.value(mockBook.getCategory().getCatDescription())
+            )
+            .andDo(result -> 
+            	log.info("Test Result: " + result.getResponse().getContentAsString())
+            );
+	}
+	
+	@Test
+	public void testGetAllBooksByCategory_NotFound() throws Exception {
+		log.info("Testing testGetAllBooksByCategory(Integer catId) for 404-Not Found Status");
+		
+		Integer catId = 0;
+		String message = "No Book found for category ID: " + catId;
+		when(bookService.getAllBooksByCategoryId(catId))
+		.thenThrow(new ResourceNotFoundException(message));
+
+	    mockMvc.perform(
+					get(baseUrl + "/category/" + catId)
+					.contentType(MediaType.APPLICATION_JSON)
+	    		)
+	            .andExpect(status().isNotFound())
+	            .andExpect(jsonPath("$.message").value(message))
+	            .andExpect(jsonPath("$.status").value(404))
+	            .andDo(result -> 
+	            	log.error("Test Result: " + result.getResponse().getContentAsString())
+	            );
+	}
+
 }
