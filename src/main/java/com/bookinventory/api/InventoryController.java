@@ -19,6 +19,10 @@ public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
 
+    @GetMapping("/")
+    public String demo(){
+        return "Test";
+    }
     @GetMapping("/available")
     public ResponseEntity<List<AvailableInventoryResponseDTO>> getAvailableInventory(){
         List<AvailableInventoryResponseDTO> availableInventory = inventoryService.getAvailableInventory();

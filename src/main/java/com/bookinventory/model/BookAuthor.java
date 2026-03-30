@@ -35,7 +35,6 @@ public class BookAuthor {
         this.primaryAuthor = primaryAuthor;
     }
 
-
     public Book getBook() {
         return book;
     }
