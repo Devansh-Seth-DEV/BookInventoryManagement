@@ -2,7 +2,7 @@ package com.bookinventory.service;
 
 import com.bookinventory.dto.converter.AvailableInventoryResponseConverter;
 import com.bookinventory.dto.AvailableInventoryResponseDTO;
-import com.bookinventory.exception.InventoryNotFoundException;
+import com.bookinventory.exception.ResourceNotFoundException;
 import com.bookinventory.model.Inventory;
 import com.bookinventory.repository.InventoryRepository;
 import org.slf4j.Logger;
@@ -32,7 +32,7 @@ public class InventoryServiceImpl implements InventoryService{
         if (inventoryList == null || inventoryList.isEmpty()) {
             String message = "Stock is empty";
             log.warn(message);
-            throw new InventoryNotFoundException(message);
+            throw new ResourceNotFoundException(message);
         }
         log.info("Successfully fetched all the books from the book repository");
         return inventoryList.stream().map(availableInventoryResponseConverter::convert).toList();

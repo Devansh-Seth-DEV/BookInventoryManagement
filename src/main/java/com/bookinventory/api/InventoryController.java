@@ -23,11 +23,6 @@ public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
 
-    @GetMapping("/")
-    public String demo(){
-        return "Test";
-    }
-
     @GetMapping("/available")
     public ResponseEntity<List<AvailableInventoryResponseDTO>> getAvailableInventory(){
         log.info("Requesting Endpoint(/api/inventory/available) to fetch all physical copies in stock");

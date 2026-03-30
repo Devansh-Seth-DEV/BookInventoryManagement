@@ -2,7 +2,6 @@ package com.bookinventory.service;
 
 import com.bookinventory.dto.converter.AvailableInventoryResponseConverter;
 import com.bookinventory.dto.AvailableInventoryResponseDTO;
-import com.bookinventory.exception.InventoryNotFoundException;
 import com.bookinventory.model.Inventory;
 import com.bookinventory.repository.InventoryRepository;
 
