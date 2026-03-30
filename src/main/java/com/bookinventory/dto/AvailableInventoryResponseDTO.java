@@ -5,16 +5,19 @@ import java.math.BigDecimal;
 public class AvailableInventoryResponseDTO {
 
     private String isbn;
+    private Integer inventoryID;
     private String bookTitle;
     private String conditionDescription;
     private BigDecimal price;
 
     public AvailableInventoryResponseDTO(String isbn,
+                                         Integer inventoryID,
                                          String bookTitle,
                                          String conditionDescription,
                                          BigDecimal price
     ) {
         this.isbn = isbn;
+        this.inventoryID = inventoryID;
         this.bookTitle = bookTitle;
         this.conditionDescription = conditionDescription;
         this.price = price;
@@ -29,6 +32,14 @@ public class AvailableInventoryResponseDTO {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public Integer getInventoryID() {
+        return inventoryID;
+    }
+
+    public void setInventoryID(Integer inventoryID) {
+        this.inventoryID = inventoryID;
     }
 
     public String getBookTitle() {

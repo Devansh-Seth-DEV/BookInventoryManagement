@@ -1,5 +1,6 @@
-package com.bookinventory.dto;
+package com.bookinventory.dto.converter;
 
+import com.bookinventory.dto.AvailableInventoryResponseDTO;
 import com.bookinventory.model.Inventory;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,7 @@ public class AvailableInventoryResponseConverter {
 
         AvailableInventoryResponseDTO dto = new AvailableInventoryResponseDTO(
                 inventory.getBook().getIsbn(),
+                inventory.getInventoryId(),
                 inventory.getBook().getTitle(),
                 inventory.getBookCondition().getDescription(),
                 inventory.getBookCondition().getPrice()
