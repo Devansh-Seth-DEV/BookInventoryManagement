@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InventoryServiceImpl implements InventoryService{
@@ -44,12 +45,14 @@ public class InventoryServiceImpl implements InventoryService{
 
         log.info("Fetching details of a specific physical copy of a book");
 
-        Inventory inventory = inventoryRepository.findById(inventoryId)
-                .orElseThrow(() -> {
-                    String message = "Inventory not found with id: " + inventoryId;
-                    log.warn(message);
-                    return new ResourceNotFoundException(message);
-                });
+        Optional<Inventory> optionalInventory = inventoryRepository.findInventoryById(inventoryId);
+        if (optionalInventory.isEmpty()) {
+            String message = "Inventory is not available with id: " + inventoryId;
+            log.warn(message);
+            throw new ResourceNotFoundException(message);
+        }
+        Inventory inventory = optionalInventory.get();
+
         log.info("Successfully fetched inventory details of a specific book");
         return InventoryResponseConverter.convert(inventory);
     }
