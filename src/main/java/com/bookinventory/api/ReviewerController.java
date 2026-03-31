@@ -25,4 +25,5 @@ public class ReviewerController {
         log.info("Received request to list all reviewers");
         return ResponseEntity.ok(reviewerService.getAllReviewers());
     }
+    
 }

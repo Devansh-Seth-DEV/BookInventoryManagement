@@ -26,4 +26,5 @@ public interface ReviewerRepository extends JpaRepository<Reviewer, Integer> {
             ORDER BY r.name
             """)
     List<AllReviewerResponseDTO> findAllReviewersWithStats();
+    
 }
