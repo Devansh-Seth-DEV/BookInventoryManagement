@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.bookinventory.dto.AllBookOfAuthorResponseDTO;
 import com.bookinventory.exception.ResourceNotFoundException;
 import com.bookinventory.model.Book;
 import com.bookinventory.model.Category;
@@ -39,7 +41,7 @@ class BookControllerTest {
 
 	private static final Logger log = LoggerFactory.getLogger(BookControllerTest.class);
 	private static Book mockBook;
-	private final String baseUrl = "/api/books";
+	private final static String baseUrl = "/api/books";
 	
 	@BeforeAll
 	static void setup() {
@@ -198,5 +200,58 @@ class BookControllerTest {
 	            	log.error("Test Result: " + result.getResponse().getContentAsString())
 	            );
 	}
+	
+	@Test
+	public void testGetAllBookByAuthorId_Success() throws Exception {
+		log.info("Testing testGetAllBookByAuthorId(Integer authorId) for 200 OK Status");
+		
+		String authorFirstName = "Elissa";
+		
+		AllBookOfAuthorResponseDTO dto = new AllBookOfAuthorResponseDTO(
+					mockBook.getIsbn(),
+					mockBook.getTitle(),
+					authorFirstName, "Weeden",
+					"CovertoCover Publishing"
+				);
 
+		List<AllBookOfAuthorResponseDTO> books = new ArrayList<>();
+		books.add(dto);
+		
+		Integer authorId = mockBook.getCategory().getCatId();
+
+		when(bookService.getAllBookByAuthorId(authorId))
+		.thenReturn(books);
+		
+		mockMvc.perform(
+				get(baseUrl + "/author/" + authorId)
+				.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$[0].isbn").value(mockBook.getIsbn()))
+            .andExpect(jsonPath("$[0].authorFirstName").value(authorFirstName))
+            .andDo(result -> 
+            	log.info("Test Result: " + result.getResponse().getContentAsString())
+            );
+	}
+
+	@Test
+	public void testGetAllBookByAuthorId_NotFound() throws Exception {
+		log.info("Testing testGetAllBookByAuthorId(Integer authorId) for 404-Not Found Status");
+		
+		Integer authorId = 0;
+		String message = "No book found written by author ID: " + authorId;
+		when(bookService.getAllBookByAuthorId(authorId))
+		.thenThrow(new ResourceNotFoundException(message));
+
+	    mockMvc.perform(
+					get(baseUrl + "/author/" + authorId)
+					.contentType(MediaType.APPLICATION_JSON)
+	    		)
+	            .andExpect(status().isNotFound())
+	            .andExpect(jsonPath("$.message").value(message))
+	            .andExpect(jsonPath("$.status").value(404))
+	            .andDo(result -> 
+	            	log.error("Test Result: " + result.getResponse().getContentAsString())
+	            );
+	}
 }
