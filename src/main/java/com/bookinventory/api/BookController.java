@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bookinventory.dto.AllBookOfAuthorResponseDTO;
 import com.bookinventory.dto.AllBookResponseDTO;
 import com.bookinventory.dto.AllBookReviewResponseDTO;
+import com.bookinventory.dto.AllBookWithCategoryResponseDTO;
 import com.bookinventory.dto.BookResponseDTO;
 import com.bookinventory.dto.converter.AllBookResponseConverter;
 import com.bookinventory.dto.converter.AllBookReviewResponseConverter;
+import com.bookinventory.dto.converter.AllBookWithCategoryResponseConverter;
 import com.bookinventory.dto.converter.BookResponseConverter;
 import com.bookinventory.model.Book;
 import com.bookinventory.model.BookReview;
@@ -41,11 +44,9 @@ public class BookController {
 	}
 	
 	
-	
-	
 	@GetMapping
 	public ResponseEntity<List<AllBookResponseDTO>> getAllBooks() {
-		log.info("Requesting Endpoint(/api/books/) to fetch all books");
+		log.info("Requesting Endpoint(/api/books) to fetch all books");
 		
 		List<Book> books = bookService.getAllBooks();
 		
@@ -81,4 +82,32 @@ public class BookController {
                 
         return ResponseEntity.ok(dtos);
     }
+	
+	@GetMapping("/category/{catId}")
+	public ResponseEntity<List<AllBookWithCategoryResponseDTO>> getAllBooksByCategory(
+		@PathVariable(name = "catId") Integer categoryId
+	) {
+		log.info("Requesting Endpoint (/api/books/category/%s) to fetch all books"
+				.formatted(categoryId));
+		
+		List<Book> books = bookService.getAllBooksByCategoryId(categoryId);
+		
+		List<AllBookWithCategoryResponseDTO> responseBody = books.stream()
+				.map(AllBookWithCategoryResponseConverter::convert)
+				.collect(Collectors.toList());
+		
+		return ResponseEntity.ok(responseBody);
+	}
+	
+	@GetMapping("/author/{authorId}")
+	public ResponseEntity<List<AllBookOfAuthorResponseDTO>> getAllBookByAuthorId(
+		@PathVariable Integer authorId
+	) {
+		log.info("Requesting Endpoint(/api/books/author/%s) to fetch all books"
+				.formatted(authorId));
+		
+		List<AllBookOfAuthorResponseDTO> responseBody = bookService.getAllBookByAuthorId(authorId);
+		
+		return ResponseEntity.ok(responseBody);
+	}
 }
