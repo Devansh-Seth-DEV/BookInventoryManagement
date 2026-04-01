@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.bookinventory.dto.UserCartResponseDTO;
+import com.bookinventory.dto.UserPurchaseDTO;
 import com.bookinventory.dto.UserResponseDTO;
 import com.bookinventory.exception.ResourceNotFoundException;
 import com.bookinventory.service.ShoppingCartService;
@@ -141,6 +143,62 @@ class UserControllerTest {
 
         mockMvc.perform(
                 get(baseUrl + "/" + userId + "/cart")
+                .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.message").value(message))
+            .andExpect(jsonPath("$.status").value(404))
+            .andDo(result ->
+                log.error("Test Result: " + result.getResponse().getContentAsString())
+            );
+    }
+    
+    @Test
+    public void testGetUserPurchaseHistory_Success() throws Exception {
+        log.info("Testing getUserPurchaseHistory(Integer userId) for 200-OK Status");
+
+        Integer userId = 1000000;
+
+        UserPurchaseDTO dto = new UserPurchaseDTO(
+        			Integer.valueOf(1000000),
+        			"1-111-11111-4",
+        			"Women are From Venus ORACLE is from Beyond Pluto",
+        			BigDecimal.valueOf(5.0),
+        			"Bad"
+        		);
+
+        List<UserPurchaseDTO> purchases = new ArrayList<>();
+        purchases.add(dto);
+
+        when(userService.getPurchaseHistoryByUserId(userId))
+        .thenReturn(purchases);
+
+        mockMvc.perform(
+                get(baseUrl + "/" + userId + "/purchases")
+                .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.size()").value(purchases.size()))
+            .andExpect(jsonPath("$[0].isbn").value(dto.getIsbn()))
+            .andExpect(jsonPath("$[0].bookTitle").value(dto.getBookTitle()))
+            .andExpect(jsonPath("$[0].price").value(dto.getPrice()))
+            .andDo(result ->
+                log.info("Test Result: " + result.getResponse().getContentAsString())
+            );
+    }
+    
+    @Test
+    void testGetUserPurchaseHistory_NotFound() throws Exception {
+        log.info("Testing getUserPurchaseHistory(Integer userId) for 404-Not Found Status");
+
+        Integer userId = 1000001;
+        String message = "No purchase history found for user with userID: " + userId;
+
+        when(userService.getPurchaseHistoryByUserId(userId))
+                .thenThrow(new ResourceNotFoundException(message));
+
+        mockMvc.perform(
+                get(baseUrl + "/" + userId + "/purchases")
                 .contentType(MediaType.APPLICATION_JSON)
             )
             .andExpect(status().isNotFound())

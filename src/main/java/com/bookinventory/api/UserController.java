@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.bookinventory.dto.UserCartResponseDTO;
+import com.bookinventory.dto.UserPurchaseDTO;
 import com.bookinventory.dto.UserResponseDTO;
 import com.bookinventory.service.ShoppingCartService;
 import com.bookinventory.service.UserService;
@@ -38,6 +39,7 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/{userId}/cart")
     public ResponseEntity<List<UserCartResponseDTO>> getUserCart(@PathVariable Integer userId) {
         logger.info("API call received for cart of userId: {}", userId);
@@ -47,5 +49,19 @@ public class UserController {
         logger.info("API response sent for cart of userId: {}", userId);
 
         return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/{userId}/purchases")
+    public ResponseEntity<List<UserPurchaseDTO>> getUserPurchaseHistory(
+    		@PathVariable Integer userId
+    	) {
+        logger.info("API call received for purchases of userId: {}", userId);
+
+        userService.getUserProfile(userId);
+        List<UserPurchaseDTO> purchases = userService.getPurchaseHistoryByUserId(userId);
+
+        logger.info("API response sent for purchases of userId: {}", userId);
+
+        return ResponseEntity.ok(purchases);
     }
 }
