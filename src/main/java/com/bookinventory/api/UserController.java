@@ -62,6 +62,10 @@ public class UserController {
 
         logger.info("API response sent for purchases of userId: {}", userId);
 
+        if (purchases.isEmpty()) {
+        	return ResponseEntity.noContent().build();
+        }
+
         return ResponseEntity.ok(purchases);
     }
 }

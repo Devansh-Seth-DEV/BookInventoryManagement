@@ -188,11 +188,32 @@ class UserControllerTest {
     }
     
     @Test
+    public void testGetUserPurchaseHistory_NoContent() throws Exception {
+        log.info("Testing getUserPurchaseHistory(Integer userId) for 204-No Content Status");
+
+        Integer userId = 1000001;
+
+        List<UserPurchaseDTO> purchases = new ArrayList<>();
+
+        when(userService.getPurchaseHistoryByUserId(userId))
+        .thenReturn(purchases);
+
+        mockMvc.perform(
+                get(baseUrl + "/" + userId + "/purchases")
+                .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(status().isNoContent())
+            .andDo(result ->
+                log.info("Test Result: " + result.getResponse().getContentAsString())
+            );
+    }
+    
+    @Test
     void testGetUserPurchaseHistory_NotFound() throws Exception {
         log.info("Testing getUserPurchaseHistory(Integer userId) for 404-Not Found Status");
 
-        Integer userId = 1000001;
-        String message = "No purchase history found for user with userID: " + userId;
+        Integer userId = 1000;
+        String message = "User not found with UserID" + userId;
 
         when(userService.getPurchaseHistoryByUserId(userId))
                 .thenThrow(new ResourceNotFoundException(message));

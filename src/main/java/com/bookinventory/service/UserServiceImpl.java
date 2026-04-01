@@ -40,15 +40,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserPurchaseDTO> getPurchaseHistoryByUserId(Integer userId) {
     	 logger.info("Fetching user purchase history for userId: {}", userId);
-    	 
     	 List<UserPurchaseDTO> purchases = userRepository.getPurchaseHistoryByUserId(userId);
-    	 
-    	 if (purchases.isEmpty()) {
-    		 String message = "No purchase history found for user with userID: " + userId;
-    		 logger.error(message);
-    		 throw new ResourceNotFoundException(message);
-    	 }
-    	 
     	 logger.info("Successfully fetched user purchase history record for userID: " + userId);
     	 return purchases;
 	}
