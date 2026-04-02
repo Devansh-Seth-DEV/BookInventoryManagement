@@ -4,12 +4,13 @@ package com.bookinventory.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.bookinventory.dto.UserPurchaseDTO;
 import com.bookinventory.dto.UserResponseDTO;
 import com.bookinventory.exception.ResourceNotFoundException;
-import com.bookinventory.model.User;
 import com.bookinventory.repository.UserRepository;
-import com.bookinventory.service.UserService;
+
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,4 +36,12 @@ public class UserServiceImpl implements UserService {
 
          return userDTO;
     }
+
+	@Override
+	public List<UserPurchaseDTO> getPurchaseHistoryByUserId(Integer userId) {
+    	 logger.info("Fetching user purchase history for userId: {}", userId);
+    	 List<UserPurchaseDTO> purchases = userRepository.getPurchaseHistoryByUserId(userId);
+    	 logger.info("Successfully fetched user purchase history record for userID: " + userId);
+    	 return purchases;
+	}
 }

@@ -1,16 +1,13 @@
 package com.bookinventory.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bookinventory.dto.AllBookReviewResponseDTO;
 import com.bookinventory.dto.AllReviewerResponseDTO;
-import com.bookinventory.dto.converter.AllBookReviewResponseConverter;
 import com.bookinventory.exception.ResourceNotFoundException;
 import com.bookinventory.model.BookReview;
 import com.bookinventory.repository.BookReviewRepository;
