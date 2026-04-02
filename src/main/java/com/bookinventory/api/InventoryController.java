@@ -3,6 +3,7 @@ package com.bookinventory.api;
 
 import com.bookinventory.dto.AvailableInventoryResponseDTO;
 import com.bookinventory.dto.InventoryResponseDTO;
+import com.bookinventory.dto.LowStockResponseDTO;
 import com.bookinventory.service.InventoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,5 +39,9 @@ public class InventoryController {
         log.info("Requesting Endpoint(/api/inventory/{inventoryId}) to fetch a physical copy of a particular Inventory");
         InventoryResponseDTO inventory = inventoryService.getInventoryById(inventoryId);
         return new ResponseEntity<>(inventory, HttpStatus.OK);
+    }
+    @GetMapping("/low-stock")
+    public ResponseEntity<List<LowStockResponseDTO>> getLowStockBooks() {
+        return new ResponseEntity<>(inventoryService.getLowStock(),HttpStatus.OK);
     }
 }

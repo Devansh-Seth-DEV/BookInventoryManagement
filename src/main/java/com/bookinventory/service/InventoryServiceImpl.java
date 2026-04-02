@@ -1,6 +1,7 @@
 package com.bookinventory.service;
 
 import com.bookinventory.dto.InventoryResponseDTO;
+import com.bookinventory.dto.LowStockResponseDTO;
 import com.bookinventory.dto.converter.AvailableInventoryResponseConverter;
 import com.bookinventory.dto.AvailableInventoryResponseDTO;
 import com.bookinventory.dto.converter.InventoryResponseConverter;
@@ -56,5 +57,12 @@ public class InventoryServiceImpl implements InventoryService{
         log.info("Successfully fetched inventory details of a specific book");
         return InventoryResponseConverter.convert(inventory);
     }
+
+    @Override
+    public List<LowStockResponseDTO> getLowStock() {
+        List<LowStockResponseDTO> lowStock = inventoryRepository.findLowStockBooks();
+        return lowStock;
+    }
+
 
 }
