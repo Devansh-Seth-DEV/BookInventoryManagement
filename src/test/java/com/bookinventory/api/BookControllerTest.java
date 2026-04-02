@@ -20,10 +20,13 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.bookinventory.dto.AllBookOfAuthorResponseDTO;
+import com.bookinventory.dto.AllBookReviewResponseDTO;
 import com.bookinventory.exception.ResourceNotFoundException;
 import com.bookinventory.model.Book;
+import com.bookinventory.model.BookReview;
 import com.bookinventory.model.Category;
 import com.bookinventory.model.Publisher;
+import com.bookinventory.model.Reviewer;
 import com.bookinventory.model.State;
 import com.bookinventory.service.BookService;
 import com.bookinventory.service.ReviewerService;
@@ -245,6 +248,64 @@ class BookControllerTest {
 
 	    mockMvc.perform(
 					get(baseUrl + "/author/" + authorId)
+					.contentType(MediaType.APPLICATION_JSON)
+	    		)
+	            .andExpect(status().isNotFound())
+	            .andExpect(jsonPath("$.message").value(message))
+	            .andExpect(jsonPath("$.status").value(404))
+	            .andDo(result -> 
+	            	log.error("Test Result: " + result.getResponse().getContentAsString())
+	            );
+	}
+
+	@Test
+	public void testGetBookReviews_Success() throws Exception {
+		log.info("Testing getBookReviews(String isbn) for 200 OK Status");
+		
+		String authorFirstName = "Elissa";
+		
+		Reviewer reviewer = new Reviewer(null, "Phelps", "Detroit News");
+		
+		BookReview bookReview = new BookReview(
+					mockBook,
+					reviewer,
+					10,
+					"Hold on to your hats, gang! If you think a cookbook or the yellow pages is exciting reading, you gotta read Professor Spada's remarkable treatise on enriching you personal relationships through your knowledge of ORACLE 8.1.6."
+				);
+
+		List<BookReview> reviews = new ArrayList<>();
+		reviews.add(bookReview);
+		
+		Integer authorId = mockBook.getCategory().getCatId();
+
+		when(reviewerService.getReviewsByBookIsbn(mockBook.getIsbn()))
+		.thenReturn(reviews);
+		
+		mockMvc.perform(
+				get(baseUrl + "/" + mockBook.getIsbn() +"/reviews")
+				.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$[0].isbn").value(mockBook.getIsbn()))
+            .andExpect(jsonPath("$[0].reviewerName").value(reviewer.getName()))
+            .andExpect(jsonPath("$[0].rating").value(bookReview.getRating()))
+            .andDo(result -> 
+            	log.info("Test Result: " + result.getResponse().getContentAsString())
+            );
+	}
+
+	@Test
+	public void testGetBookReviews_NotFound() throws Exception {
+		log.info("Testing getBookReviews(String isbn) for 404-Not Found Status");
+		
+		String isbn = "1-000-10000-1";
+		String message = "No one reviewed the book with ISBN " + isbn + " yet!";
+
+		when(reviewerService.getReviewsByBookIsbn(isbn))
+		.thenThrow(new ResourceNotFoundException(message));
+
+	    mockMvc.perform(
+				get(baseUrl + "/" + isbn +"/reviews")
 					.contentType(MediaType.APPLICATION_JSON)
 	    		)
 	            .andExpect(status().isNotFound())

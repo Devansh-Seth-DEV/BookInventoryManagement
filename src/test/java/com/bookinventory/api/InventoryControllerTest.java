@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.bookinventory.dto.AvailableInventoryResponseDTO;
 
-import com.bookinventory.dto.LowStockResponseDTO;
 import com.bookinventory.service.InventoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,6 @@ class InventoryControllerTest {
     private static final Logger log = LoggerFactory.getLogger(InventoryControllerTest.class);
 
     private AvailableInventoryResponseDTO mockDto;
-    private LowStockResponseDTO lowStockDto;
 
     @BeforeEach
     void setup() {
@@ -42,12 +40,6 @@ class InventoryControllerTest {
         mockDto = new AvailableInventoryResponseDTO();
         mockDto.setIsbn("1-111-11111-4");
         mockDto.setBookTitle("Women are From Venus ORACLE is from Beyond Pluto");
-
-        lowStockDto = new LowStockResponseDTO(
-                "1000-1920-2010",
-                "Wdjklcff",
-                3L
-        );
     }
 
     @Test
