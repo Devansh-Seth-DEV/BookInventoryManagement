@@ -1,15 +1,20 @@
 package com.bookinventory.service;
 
 import com.bookinventory.dto.InventoryResponseDTO;
+import com.bookinventory.dto.LowStockResponseDTO;
 import com.bookinventory.dto.converter.AvailableInventoryResponseConverter;
 import com.bookinventory.dto.AvailableInventoryResponseDTO;
 import com.bookinventory.dto.converter.InventoryResponseConverter;
 import com.bookinventory.exception.ResourceNotFoundException;
+import com.bookinventory.model.BookCondition;
 import com.bookinventory.model.Inventory;
 import com.bookinventory.repository.InventoryRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,5 +61,15 @@ public class InventoryServiceImpl implements InventoryService{
         log.info("Successfully fetched inventory details of a specific book");
         return InventoryResponseConverter.convert(inventory);
     }
+
+    @Override
+    public List<LowStockResponseDTO> getLowStock() {
+        List<LowStockResponseDTO> lowStock = inventoryRepository.findLowStockBooks();
+        if (lowStock.size() == 0){
+            throw new ResourceNotFoundException("No Book is less Stock");
+        }
+        return lowStock;
+    }
+
 
 }
