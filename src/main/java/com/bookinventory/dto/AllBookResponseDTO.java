@@ -31,6 +31,11 @@ public class AllBookResponseDTO {
      * The name of the organization responsible for publishing the title.
      */
     private String publisherName;
+    
+    /**
+     * The category or genere in which the book belongs
+     */
+    private String categoryName;
 	
 	public AllBookResponseDTO() {
 		
@@ -41,13 +46,15 @@ public class AllBookResponseDTO {
 		String title,
 		String description,
 		String edition,
-		String publisherName
+		String publisherName,
+		String categoryName
 	) {
 		this.isbn = isbn;
 		this.title = title;
 		this.description = description;
 		this.edition = edition;
 		this.publisherName = publisherName;
+		this.categoryName = categoryName;
 	}
 
 	public String getIsbn() {
@@ -68,5 +75,13 @@ public class AllBookResponseDTO {
 
 	public String getPublisherName() {
 		return publisherName;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 }

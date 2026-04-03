@@ -7,8 +7,10 @@ import com.bookinventory.model.Publisher;
 public class AllBookResponseConverter {
 	public static AllBookResponseDTO convert(Book book) {
 		String publisherName = null;
+		String categoryName = null;
 		if (book.getPublisher() != null) {
 			publisherName = book.getPublisher().getName();
+			categoryName = book.getCategory().getCatDescription();
 		}
 		
 		AllBookResponseDTO dto = new AllBookResponseDTO(
@@ -16,7 +18,8 @@ public class AllBookResponseConverter {
 					book.getTitle(),
 					book.getDescription(),
 					book.getEdition(),
-					publisherName
+					publisherName,
+					categoryName
 				);
 		return dto;
 	}
