@@ -3,10 +3,13 @@ package com.bookinventory.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
 import com.bookinventory.dto.UserPurchaseDTO;
 import com.bookinventory.dto.UserResponseDTO;
+import com.bookinventory.exception.DuplicateResourceException;
 import com.bookinventory.exception.ResourceNotFoundException;
+import com.bookinventory.exception.UnauthorizedException;
 import com.bookinventory.model.User;
 import com.bookinventory.repository.UserRepository;
 
@@ -51,11 +54,11 @@ public class UserServiceImpl implements UserService {
 	    User user = userRepository.findByUserName(username);
 
 	    if(user == null) {
-	        throw new RuntimeException("Username not found");
+	        throw new ResourceNotFoundException("No user found with Username " + username);
 	    }
 
 	    if(!user.getPassword().equals(password)) {
-	        throw new RuntimeException("Incorrect password");
+	        throw new UnauthorizedException("Failed to login, password is incorrect!");
 	    }
 
 	    return user;
@@ -64,7 +67,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User createUser(User user) {
 	    if(userRepository.findByUserName(user.getUserName()) != null) {
-	        throw new RuntimeException("Username already taken");
+	        throw new DuplicateResourceException("Username " + user.getUserName() + " already taken");
 	    }
 
 	    return userRepository.save(user);
