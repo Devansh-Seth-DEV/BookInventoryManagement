@@ -18,34 +18,4 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
 	}
-	
-	@ExceptionHandler(DuplicateResourceException.class)
-	public ResponseEntity<ExceptionResponse> handleConflict(DuplicateResourceException e) {
-		ExceptionResponse exception = new ExceptionResponse(
-					HttpStatus.CONFLICT.value(),
-					e.getMessage()
-				);
-		
-		return new ResponseEntity<>(exception, HttpStatus.CONFLICT);
-	}
-	
-	@ExceptionHandler(UnauthorizedException.class)
-	public ResponseEntity<ExceptionResponse> handleUnauthorized(UnauthorizedException e) {
-		ExceptionResponse exception = new ExceptionResponse(
-					HttpStatus.UNAUTHORIZED.value(),
-					e.getMessage()
-				);
-		
-		return new ResponseEntity<>(exception, HttpStatus.UNAUTHORIZED);
-	}
-
-	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<ExceptionResponse> handleBadRequest(RuntimeException e) {
-		ExceptionResponse exception = new ExceptionResponse(
-					HttpStatus.BAD_REQUEST.value(),
-					e.getMessage()
-				);
-		
-		return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
-	}
 }

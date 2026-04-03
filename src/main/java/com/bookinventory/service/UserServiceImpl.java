@@ -3,14 +3,10 @@ package com.bookinventory.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
 import com.bookinventory.dto.UserPurchaseDTO;
 import com.bookinventory.dto.UserResponseDTO;
-import com.bookinventory.exception.DuplicateResourceException;
 import com.bookinventory.exception.ResourceNotFoundException;
-import com.bookinventory.exception.UnauthorizedException;
-import com.bookinventory.model.User;
 import com.bookinventory.repository.UserRepository;
 
 import java.util.List;
@@ -47,29 +43,5 @@ public class UserServiceImpl implements UserService {
     	 List<UserPurchaseDTO> purchases = userRepository.getPurchaseHistoryByUserId(userId);
     	 logger.info("Successfully fetched user purchase history record for userID: " + userId);
     	 return purchases;
-	}
-	
-	@Override
-	public User login(String username, String password) {
-	    User user = userRepository.findByUserName(username);
-
-	    if(user == null) {
-	        throw new ResourceNotFoundException("No user found with Username " + username);
-	    }
-
-	    if(!user.getPassword().equals(password)) {
-	        throw new UnauthorizedException("Failed to login, password is incorrect!");
-	    }
-
-	    return user;
-	}
-	
-	@Override
-	public User createUser(User user) {
-	    if(userRepository.findByUserName(user.getUserName()) != null) {
-	        throw new DuplicateResourceException("Username " + user.getUserName() + " already taken");
-	    }
-
-	    return userRepository.save(user);
 	}
 }
