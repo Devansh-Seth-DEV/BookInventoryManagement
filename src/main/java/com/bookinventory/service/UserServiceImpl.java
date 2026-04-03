@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.bookinventory.dto.UserPurchaseDTO;
 import com.bookinventory.dto.UserResponseDTO;
 import com.bookinventory.exception.ResourceNotFoundException;
+import com.bookinventory.model.User;
 import com.bookinventory.repository.UserRepository;
 
 import java.util.List;
@@ -43,5 +44,29 @@ public class UserServiceImpl implements UserService {
     	 List<UserPurchaseDTO> purchases = userRepository.getPurchaseHistoryByUserId(userId);
     	 logger.info("Successfully fetched user purchase history record for userID: " + userId);
     	 return purchases;
+	}
+	
+	@Override
+	public User login(String username, String password) {
+	    User user = userRepository.findByUserName(username);
+
+	    if(user == null) {
+	        throw new RuntimeException("Username not found");
+	    }
+
+	    if(!user.getPassword().equals(password)) {
+	        throw new RuntimeException("Incorrect password");
+	    }
+
+	    return user;
+	}
+	
+	@Override
+	public User createUser(User user) {
+	    if(userRepository.findByUserName(user.getUserName()) != null) {
+	        throw new RuntimeException("Username already taken");
+	    }
+
+	    return userRepository.save(user);
 	}
 }
