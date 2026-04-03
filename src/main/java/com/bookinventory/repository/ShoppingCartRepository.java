@@ -10,7 +10,13 @@ import com.bookinventory.model.ShoppingCart;
 import com.bookinventory.model.ShoppingCartId;
 
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, ShoppingCartId> {
-
+	/**
+     * Retrieves all items currently held in a specific user's shopping cart.
+     * Projects directly into a UserCartResponseDTO, pulling metadata from the 
+     * Book and Publisher entities to minimize frontend overhead.
+     * @param userId The unique primary key of the customer.
+     * @return A list of lightweight cart summary objects for the UI.
+     */
 	@Query("""
 	        SELECT
 	            NEW com.bookinventory.dto.UserCartResponseDTO(

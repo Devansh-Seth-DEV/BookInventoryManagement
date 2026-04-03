@@ -3,10 +3,24 @@ package com.bookinventory.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Composite Key class representing the unique pairing of a User and an Inventory unit.
+ * Implements Serializable to facilitate persistence and session management in 
+ * the purchase auditing layer.
+ */
 public class PurchaseLogId 
 	implements Serializable
 {
+    /**
+     * The unique ID of the customer who made the purchase.
+     * Acts as the first segment of the composite primary key.
+     */
 	private Integer user;
+
+    /**
+     * The unique ID of the physical book unit sold.
+     * Acts as the second segment of the composite primary key.
+     */
 	private Integer inventory;
 	
 	public PurchaseLogId() {

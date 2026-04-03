@@ -36,6 +36,11 @@ class ReviewerControllerTest {
     
     private AllReviewerResponseDTO mockReviewer;
 
+    /**
+     * Prepares a mock Reviewer DTO before each test execution.
+     * Sets up a standardized profile including affiliate publication, total reviews 
+     * performed, and maximum rating assigned for consistent testing.
+     */
     @BeforeEach
     void setup() {
         
@@ -48,6 +53,11 @@ class ReviewerControllerTest {
         );
     }
 
+    /**
+     * Test Case: Retrieve the full list of registered critics.
+     * Verifies that the endpoint successfully returns a 200 OK status and 
+     * serializes the professional credentials of all reviewers in the system.
+     */
     @Test
     void testGetAllReviewers_Success() throws Exception {
         log.info("Testing getAllReviewers() for 200-OK Status");
@@ -71,6 +81,11 @@ class ReviewerControllerTest {
             );
     }
 
+    /**
+     * Test Case: Handle request when no reviewer profiles exist.
+     * Validates that a missing critics list triggers a 404 Not Found status 
+     * with an appropriate error message for the frontend.
+     */
     @Test
     void testGetAllReviewers_NotFound() throws Exception {
         log.info("Testing getAllReviewers() for 404-Not Found Status");

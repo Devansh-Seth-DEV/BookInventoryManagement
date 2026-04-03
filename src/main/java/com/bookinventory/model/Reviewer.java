@@ -7,14 +7,28 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * Persistent entity representing a professional or community critic.
+ * Maps to the 'reviewer' table and serves as the identity source for 
+ * all qualitative feedback in the book ecosystem.
+ */
 @Entity
 @Table(name = "reviewer")
 public class Reviewer {
+    
+    /**
+     * Unique internal identifier for the critic, 
+     * automatically incremented to maintain an distinct audit trail.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ReviewerID")
     private Integer reviewerId;
 
+    /**
+     * The display name of the reviewer. 
+     * Required field with a 20-character limit for concise UI presentation.
+     */
     @Column(
     	name = "Name", 
     	nullable = false, 
@@ -22,6 +36,10 @@ public class Reviewer {
     )
     private String name;
 
+    /**
+     * The organization or publication the reviewer represents (e.g., "The Times").
+     * Provides professional context to the credibility of the review.
+     */
     @Column(name = "EmployedBy", length = 30)
     private String employedBy;
 

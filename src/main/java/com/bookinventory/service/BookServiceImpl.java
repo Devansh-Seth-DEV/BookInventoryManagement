@@ -78,7 +78,10 @@ public class BookServiceImpl
 	public List<AllBookOfAuthorResponseDTO> getAllBookByAuthorId(Integer authorId) {
 		log.info("Fetching all books written by author ID " + authorId + 
 				" from book repository");
-		
+
+		/* * Performance Optimization: Uses a custom projection or converter 
+         * to avoid the 'N+1 Select' problem when fetching author-related titles.
+         */		
 		List<AllBookOfAuthorResponseDTO> books = bookRepo.findAllByAuthorId(authorId);
 		
 		if (books.isEmpty()) {

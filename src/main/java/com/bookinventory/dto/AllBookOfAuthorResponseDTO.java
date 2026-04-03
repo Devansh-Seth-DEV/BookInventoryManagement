@@ -1,11 +1,35 @@
 package com.bookinventory.dto;
 
+/**
+ * Data Transfer Object representing a summary of books associated with a specific author.
+ * Used for optimized catalog views where author and publisher metadata are flattened.
+ */
 public class AllBookOfAuthorResponseDTO {
-	private String isbn;
-	private String title;
-	private String authorFirstName;
-	private String authorLastName;
-	private String pubilsherName;
+
+    /**
+     * The 10 or 13-digit unique International Standard Book Number.
+     */
+    private String isbn;
+
+    /**
+     * The full title of the book.
+     */
+    private String title;
+
+    /**
+     * The legal first name of the book's author.
+     */
+    private String authorFirstName;
+
+    /**
+     * The legal last name of the book's author.
+     */
+    private String authorLastName;
+
+    /**
+     * The name of the organization responsible for the book's publication.
+     */
+    private String pubilsherName;
 	
 	public AllBookOfAuthorResponseDTO() {
 		

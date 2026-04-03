@@ -9,23 +9,44 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Persistent entity representing an individual physical copy of a book.
+ * While the 'Book' entity represents the title, 'Inventory' tracks specific 
+ * units, their current physical condition, and their availability for sale.
+ */
 @Entity
 @Table(name = "inventory")
 public class Inventory {
 
+    /**
+     * Unique internal tracking number for a specific physical unit.
+     * Automatically incremented to ensure distinct identification of every copy.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "InventoryID")
     private Integer inventoryId;
 
+    /**
+     * The specific title this physical unit belongs to.
+     * Established via a Mandatory Many-to-One relationship to the Book entity.
+     */
     @ManyToOne
     @JoinColumn(name = "ISBN", nullable = false)
     private Book book;
 
+    /**
+     * The current quality or state of this specific copy (e.g., New, Used).
+     * Linked to the BookCondition entity to determine the unit's pricing tier.
+     */
     @ManyToOne
     @JoinColumn(name = "Ranks", nullable = false)
     private BookCondition bookCondition;
 
+    /**
+     * Flag indicating the availability of the unit.
+     * Set to 'true' once a transaction is finalized to remove the item from the storefront.
+     */
     @Column(name = "Purchased")
     private Boolean purchased;
 

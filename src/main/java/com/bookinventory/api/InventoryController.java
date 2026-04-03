@@ -25,6 +25,10 @@ public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
 
+    /**
+     * Retrieves all unique physical book copies currently available for purchase.
+     * @return ResponseEntity containing a list of AvailableInventoryResponseDTO.
+     */
     @GetMapping("/available")
     public ResponseEntity<List<AvailableInventoryResponseDTO>> getAvailableInventory(){
         log.info("Requesting Endpoint(/api/inventory/available) to fetch all physical copies in stock");
@@ -32,6 +36,11 @@ public class InventoryController {
         return new ResponseEntity<>(availableInventory, HttpStatus.OK);
     }
 
+    /**
+     * Fetches comprehensive data for a single physical asset via its inventory identifier.
+     * @param inventoryId The primary key identifying the unique physical asset.
+     * @return ResponseEntity containing the InventoryResponseDTO.
+     */
     @GetMapping("/{inventoryId}")
     public ResponseEntity<InventoryResponseDTO> getInventoryById(
             @PathVariable Integer inventoryId) {
@@ -39,9 +48,13 @@ public class InventoryController {
         InventoryResponseDTO inventory = inventoryService.getInventoryById(inventoryId);
         return new ResponseEntity<>(inventory, HttpStatus.OK);
     }
+    
+    /**
+     * Identifies inventory items where the stock level has fallen below the safety threshold.
+     * @return ResponseEntity containing a list of LowStockResponseDTO for administrative review.
+     */
     @GetMapping("/low-stock")
     public ResponseEntity<List<LowStockResponseDTO>> getLowStockBooks() {
         return new ResponseEntity<>(inventoryService.getLowStock(),HttpStatus.OK);
     }
-
 }

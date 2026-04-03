@@ -37,6 +37,10 @@ class InventoryControllerTest {
     private AvailableInventoryResponseDTO mockDto;
     private LowStockResponseDTO lowStockDto;
 
+    /**
+     * Prepares fresh Mock DTO instances before each test execution.
+     * Ensures an isolated and predictable state for inventory and low-stock data scenarios.
+     */
     @BeforeEach
     void setup() {
 
@@ -51,6 +55,11 @@ class InventoryControllerTest {
         );
     }
 
+    /**
+     * Test Case: Retrieve all available inventory units.
+     * Validates that the endpoint correctly returns a 200 OK status and maps 
+     * the AvailableInventoryResponseDTO list for the storefront.
+     */
     @Test
     void testGetAvailableInventory_Success() throws Exception {
 
@@ -73,6 +82,12 @@ class InventoryControllerTest {
                         log.info("Response: " + result.getResponse().getContentAsString())
                 );
     }
+    
+    /**
+     * Test Case: Identify books with low stock levels.
+     * Confirms the controller correctly processes and returns a 200 OK status 
+     * with the currentStock counts for restocking alerts.
+     */
     @Test
     void testGetLowStock_Success() throws Exception {
 
@@ -97,6 +112,11 @@ class InventoryControllerTest {
                 );
     }
 
+    /**
+     * Test Case: Handle scenario where no books fall below the low-stock threshold.
+     * Ensures that the ResourceNotFoundException is caught and translated 
+     * into a 404 Not Found response by the API.
+     */
     @Test
     void testGetLowStock_NotFound() throws Exception {
 

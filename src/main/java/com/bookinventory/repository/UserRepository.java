@@ -12,7 +12,13 @@ import com.bookinventory.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 	
-	
+	/**
+     * Retrieves a summarized user profile including their security role.
+     * Projects directly into a UserResponseDTO to ensure sensitive internal data (like passwords) 
+     * is never loaded or exposed to the frontend.
+     * @param userId The unique primary key of the user.
+     * @return An Optional containing the lightweight user profile summary.
+     */	
 	@Query("""
 	        SELECT 
 	            NEW com.bookinventory.dto.UserResponseDTO(
@@ -27,6 +33,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	        """)
 	Optional<UserResponseDTO> getUserProfileById(Integer userId);
 	
+	/**
+     * Aggregates a user's complete purchase history by traversing the audit log.
+     * Joins the PurchaseLog, Inventory, and Book metadata to provide a comprehensive receipt view.
+     * @param userId The unique primary key of the customer.
+     * @return A list of UserPurchaseDTOs representing every confirmed transaction.
+     */
 	@Query("""
 		SELECT
 			NEW com.bookinventory.dto.UserPurchaseDTO(
@@ -45,5 +57,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	""")
 	List<UserPurchaseDTO> getPurchaseHistoryByUserId(Integer userId);
 	
+	/**
+     * Standard derived query for authentication.
+     * Used by the security layer to fetch the full User entity for credential verification.
+     * @param userName The unique login identifier.
+     * @return The complete User entity, or null if not found.
+     */
 	User findByUserName(String userName);
 }

@@ -45,6 +45,7 @@ public class InventoryServiceImpl implements InventoryService{
         log.info("Successfully fetched all the books from the book repository");
         return inventoryList.stream().map(availableInventoryResponseConverter::convert).toList();
     }
+
     @Override
     public InventoryResponseDTO getInventoryById(Integer inventoryId) {
 

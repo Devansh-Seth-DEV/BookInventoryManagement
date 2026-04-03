@@ -44,6 +44,11 @@ class UserControllerTest {
     private static UserResponseDTO mockUserResponseDTO;
     private static UserCartResponseDTO mockUserCartResponseDTO;
 
+    /**
+     * Initializes static mock DTOs for User Profiles and Cart Items.
+     * Establishes a consistent baseline of mock data used to verify 
+     * controller-to-service mapping and JSON serialization.
+     */
     @BeforeAll
     static void setup() {
         mockUserResponseDTO = new UserResponseDTO();
@@ -60,6 +65,11 @@ class UserControllerTest {
         mockUserCartResponseDTO.setPublisherName("CovertoCover Publishing");
     }
 
+    /**
+     * Test Case: Retrieve a specific user's profile details.
+     * Verifies that the endpoint returns a 200 OK status and correctly 
+     * serializes the UserResponseDTO containing personal and role information.
+     */
     @Test
     void testGetUserProfile_Success() throws Exception {
         log.info("Testing getUserProfile(Integer userId) for 200-OK Status");
@@ -83,6 +93,11 @@ class UserControllerTest {
             );
     }
 
+    /**
+     * Test Case: Handle request for a non-existent user profile.
+     * Confirms that a ResourceNotFoundException from the service layer 
+     * is translated into a 404 Not Found response with appropriate error details.
+     */
     @Test
     void testGetUserProfile_NotFound() throws Exception {
         log.info("Testing getUserProfile(Integer userId) for 404-Not Found Status");
@@ -105,6 +120,11 @@ class UserControllerTest {
             );
     }
 
+    /**
+     * Test Case: Retrieve all items currently in a user's shopping cart.
+     * Ensures the endpoint successfully returns a 200 OK status and the 
+     * complete list of UserCartResponseDTO objects.
+     */
     @Test
     void testGetUserCart_Success() throws Exception {
         log.info("Testing getUserCart(Integer userId) for 200-OK Status");
@@ -131,6 +151,11 @@ class UserControllerTest {
             );
     }
 
+    /**
+     * Test Case: Handle request for an empty or missing shopping cart.
+     * Validates that the system returns a 404 Not Found status when the 
+     * service layer identifies no active cart for the given User ID.
+     */
     @Test
     void testGetUserCart_NotFound() throws Exception {
         log.info("Testing getUserCart(Integer userId) for 404-Not Found Status");
@@ -153,6 +178,11 @@ class UserControllerTest {
             );
     }
     
+    /**
+     * Test Case: Retrieve the historical purchase log for a user.
+     * Verifies that completed transactions are correctly mapped to 
+     * UserPurchaseDTO objects and returned with a 200 OK status.
+     */
     @Test
     public void testGetUserPurchaseHistory_Success() throws Exception {
         log.info("Testing getUserPurchaseHistory(Integer userId) for 200-OK Status");
@@ -187,6 +217,11 @@ class UserControllerTest {
             );
     }
     
+    /**
+     * Test Case: Handle users with a valid account but zero purchase history.
+     * Confirms that the controller returns a 204 No Content status when 
+     * the purchase list is empty, following RESTful best practices.
+     */
     @Test
     public void testGetUserPurchaseHistory_NoContent() throws Exception {
         log.info("Testing getUserPurchaseHistory(Integer userId) for 204-No Content Status");
@@ -208,6 +243,11 @@ class UserControllerTest {
             );
     }
     
+    /**
+     * Test Case: Handle purchase history request for an invalid User ID.
+     * Ensures the 404 Not Found status is properly enforced when the 
+     * user record itself does not exist in the system.
+     */
     @Test
     void testGetUserPurchaseHistory_NotFound() throws Exception {
         log.info("Testing getUserPurchaseHistory(Integer userId) for 404-Not Found Status");

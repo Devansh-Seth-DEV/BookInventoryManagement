@@ -1,11 +1,34 @@
 package com.bookinventory.dto;
 
+/**
+ * Data Transfer Object representing the public-facing profile of a registered user.
+ * Used for populating user dashboards and administrative account lists.
+ */
 public class UserResponseDTO {
 
+    /**
+     * The legal first name of the registered user.
+     */
     private String firstName;
+
+    /**
+     * The legal last name or surname of the registered user.
+     */
     private String lastName;
+
+    /**
+     * The unique login identifier chosen by the user for the platform.
+     */
     private String userName;
+
+    /**
+     * The primary contact number associated with the user's account.
+     */
     private String phoneNumber;
+
+    /**
+     * The security classification or privilege level (e.g., ADMIN, CUSTOMER).
+     */
     private String roleName;
 
     public UserResponseDTO() {

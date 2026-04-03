@@ -10,32 +10,42 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.OneToMany;
 
+/**
+ * Persistent entity representing the various physical states a book can be in.
+ * Maps to the 'bookcondition' table and provides standardized grading criteria 
+ * (e.g., New, Used, Damaged) that directly influence pricing.
+ */
 @Entity
 @Table(name = "bookcondition")
 public class BookCondition {
 
+    /**
+     * Unique internal identifier and ranking for the condition grade.
+     * Automatically incremented by the database.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Ranks")
     private Integer ranks;
 
-    @Column(
-            name = "Description",
-            length = 50
-    )
+    /**
+     * A brief, user-friendly label for the book's state (e.g., "Like New").
+     */
+    @Column(name = "Description", length = 50)
     private String description;
 
-    @Column(
-            name = "FullDescription",
-            length = 255
-    )
+    /**
+     * A detailed explanation of what this specific condition grade entails 
+     * for the consumer (e.g., "May include minor shelf wear").
+     */
+    @Column(name = "FullDescription", length = 255)
     private String fullDescription;
 
-    @Column(
-    	name = "Price", 
-    	precision = 12, 
-    	scale = 2
-    )
+    /**
+     * The standardized price point associated with this condition grade.
+     * Uses BigDecimal for financial precision with a 12,2 scale.
+     */
+    @Column(name = "Price", precision = 12, scale = 2)
     private BigDecimal price = new BigDecimal("30.00");
 
 

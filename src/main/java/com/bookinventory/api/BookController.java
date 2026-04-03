@@ -43,7 +43,10 @@ public class BookController {
 	    this.reviewerService= reviewerService;
 	}
 	
-	
+	/**
+     * Retrieves the complete library catalog.
+     * @return ResponseEntity containing a list of AllBookResponseDTO.
+     */	
 	@GetMapping
 	public ResponseEntity<List<AllBookResponseDTO>> getAllBooks() {
 		log.info("Requesting Endpoint(/api/books) to fetch all books");
@@ -56,7 +59,12 @@ public class BookController {
 		
 		return new ResponseEntity<>(responseBody, HttpStatus.OK);
 	}
-	
+
+	/**
+     * Fetches detailed metadata for a specific title via its ISBN.
+     * @param bookIsbn The unique International Standard Book Number.
+     * @return ResponseEntity containing the BookResponseDTO metadata.
+     */
 	@GetMapping("/{isbn}")
 	public ResponseEntity<BookResponseDTO> getBookWithDetailsById(
 				@PathVariable("isbn") String bookIsbn
@@ -70,6 +78,12 @@ public class BookController {
 		return new ResponseEntity<>(responseBody, HttpStatus.OK);
 	}
 	
+	
+	/**
+     * Retrieves all professional reviews and ratings associated with a specific title.
+     * @param isbn The unique International Standard Book Number.
+     * @return ResponseEntity containing a list of AllBookReviewResponseDTO.
+     */
 	@GetMapping("/{isbn}/reviews")
     public ResponseEntity<List<AllBookReviewResponseDTO>> getBookReviews(@PathVariable String isbn) {
         log.info("Request received for reviews of ISBN: {}", isbn);
@@ -83,6 +97,11 @@ public class BookController {
         return ResponseEntity.ok(dtos);
     }
 	
+	/**
+     * Filters the catalog by a specific category identifier.
+     * @param categoryId The primary key of the book category.
+     * @return ResponseEntity containing a list of AllBookWithCategoryResponseDTO.
+     */
 	@GetMapping("/category/{catId}")
 	public ResponseEntity<List<AllBookWithCategoryResponseDTO>> getAllBooksByCategory(
 		@PathVariable(name = "catId") Integer categoryId
@@ -99,6 +118,11 @@ public class BookController {
 		return ResponseEntity.ok(responseBody);
 	}
 	
+	/**
+     * Retrieves all titles authored by a specific contributor.
+     * @param authorId The primary key of the author.
+     * @return ResponseEntity containing a list of AllBookOfAuthorResponseDTO.
+     */
 	@GetMapping("/author/{authorId}")
 	public ResponseEntity<List<AllBookOfAuthorResponseDTO>> getAllBookByAuthorId(
 		@PathVariable Integer authorId
