@@ -44,4 +44,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 		AND inv.purchased = true
 	""")
 	List<UserPurchaseDTO> getPurchaseHistoryByUserId(Integer userId);
+	
+	User findByUserName(String userName);
 }
