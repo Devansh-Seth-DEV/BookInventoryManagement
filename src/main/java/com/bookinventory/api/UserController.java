@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.bookinventory.dto.LoginRequestDTO;
 import com.bookinventory.dto.UserCartResponseDTO;
 import com.bookinventory.dto.UserPurchaseDTO;
 import com.bookinventory.dto.UserResponseDTO;
+import com.bookinventory.model.User;
 import com.bookinventory.service.ShoppingCartService;
 import com.bookinventory.service.UserService;
 
@@ -29,6 +31,7 @@ public class UserController {
         this.shoppingCartService = shoppingCartService;
     }
 
+    
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDTO> getUserProfile(@PathVariable Integer userId) {
     	logger.info("Fetching user profile for userId: {}", userId);
