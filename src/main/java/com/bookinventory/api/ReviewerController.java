@@ -20,6 +20,10 @@ public class ReviewerController {
 
     private static final Logger log = LoggerFactory.getLogger(ReviewerController.class);
 
+    /**
+     * Retrieves a curated directory of all professional reviewers and critics.
+     * @return ResponseEntity containing a list of AllReviewerResponseDTO.
+     */
     @GetMapping
     public ResponseEntity<List<AllReviewerResponseDTO>> getAllReviewers() {
         log.info("Received request to list all reviewers");

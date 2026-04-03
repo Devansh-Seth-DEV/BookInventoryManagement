@@ -1,10 +1,29 @@
 package com.bookinventory.dto;
 
+/**
+ * Data Transfer Object representing an item currently held in a user's active shopping cart.
+ * Provides the essential metadata required for the checkout and summary views.
+ */
 public class UserCartResponseDTO {
 
+    /**
+     * The unique International Standard Book Number for the item in the cart.
+     */
     private String isbn;
+
+    /**
+     * The official title of the book the user intends to purchase.
+     */
     private String bookTitle;
+
+    /**
+     * The specific release version or edition of the publication.
+     */
     private String edition;
+
+    /**
+     * The name of the organization responsible for the book's publication.
+     */
     private String publisherName;
 
     public UserCartResponseDTO() {

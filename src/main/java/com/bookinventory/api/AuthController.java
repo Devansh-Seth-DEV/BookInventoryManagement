@@ -16,6 +16,11 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Validates user credentials and initiates an authenticated session.
+     * @param request LoginRequestDTO containing the username and password.
+     * @return ResponseEntity containing UserResponseDTO or an error message.
+     */    
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO request) {
         try {
@@ -27,6 +32,11 @@ public class AuthController {
         }
     }
 
+    /**
+     * Persists a new user profile into the system repository.
+     * @param user The User entity containing registration data.
+     * @return ResponseEntity containing the persisted User object or an error message.
+     */
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody User user) {
         try {

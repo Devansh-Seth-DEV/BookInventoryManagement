@@ -9,14 +9,28 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Persistent entity representing a book publishing house.
+ * Maps to the 'publisher' table and provides organizational 
+ * details used for inventory sourcing and catalog filtering.
+ */
 @Entity
 @Table(name="publisher")
 public class Publisher {
+
+    /**
+     * Unique internal identifier for the publisher, 
+     * automatically incremented for sequence integrity.
+     */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="PublisherId")
 	private Integer publisherId;
 	
+    /**
+     * The official business name of the publishing house. 
+     * Required field with a 50-character limit for database optimization.
+     */
 	@Column(
 		name="Name", 
 		nullable = false, 
@@ -24,12 +38,19 @@ public class Publisher {
 	)
 	private String name;
 	
+    /**
+     * The city where the publisher's headquarters or main office is located.
+     */
 	@Column(
 			name="City",
 			length=30
 	)
 	private String city;
 	
+    /**
+     * The regional jurisdiction or state associated with the publisher's location.
+     * Established via a Many-to-One relationship to the State entity.
+     */
     @ManyToOne
     @JoinColumn(name = "StateCode")
     private State stateCode;

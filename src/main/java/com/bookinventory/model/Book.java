@@ -7,43 +7,56 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Persistent entity representing a unique book title in the catalog.
+ * Acts as the central anchor for Authors, Inventory units, and Reviews.
+ * This model defines the metadata shared across all physical copies of a specific work.
+ */
 @Entity
 @Table(name = "book")
 public class Book {
 
+    /**
+     * The unique 13-character International Standard Book Number.
+     * Serves as the natural primary key for the entity.
+     */
     @Id
-    @Column(name = "ISBN",
-            length = 13
-    )
+    @Column(name = "ISBN", length = 13)
     private String isbn;
 
-    @Column(
-    	name = "Title",
-    	length = 70, 
-    	nullable = false
-    )
+    /**
+     * The official title of the publication. 
+     * Required field with a 70-character limit for optimized database indexing.
+     */
+    @Column(name = "Title", length = 70, nullable = false)
     private String title;
 
-    @Column(name = "Description",
-            length = 100
-    )
+    /**
+     * A brief synopsis or marketing blurb for the title.
+     */
+    @Column(name = "Description", length = 100)
     private String description;
 
+    /**
+     * The genre or classification associated with this book.
+     * Established via a Many-to-One relationship to the Category entity.
+     */
     @ManyToOne
     @JoinColumn(name = "Category")
     private Category category;
 
-    @Column(
-            name = "Edition",
-            length = 30
-    )
+    /**
+     * The specific release version or printing of the book.
+     */
+    @Column(name = "Edition", length = 30)
     private String edition;
 
+    /**
+     * The entity responsible for the book's production and distribution.
+     * Mandatory association representing the link to the Publisher table.
+     */
     @ManyToOne
-    @JoinColumn(
-            name = "PublisherID",
-            nullable = false
-    )
+    @JoinColumn(name = "PublisherID", nullable = false)
     private Publisher publisher;
 
     public Book() {

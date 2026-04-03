@@ -1,11 +1,36 @@
 package com.bookinventory.dto;
 
+/**
+ * Data Transfer Object representing a summary of book metadata for catalog listing.
+ * This DTO serves as the primary data exchange format for the storefront's 
+ * global search and browse functionality.
+ */
 public class AllBookResponseDTO {
-	private String isbn;
-	private String title;
-	private String description;
-	private String edition;
-	private String publisherName;
+
+    /**
+     * The unique International Standard Book Number identifying the specific title.
+     */
+    private String isbn;
+
+    /**
+     * The official title of the book.
+     */
+    private String title;
+
+    /**
+     * A brief summary or synopsis of the book's content.
+     */
+    private String description;
+
+    /**
+     * The specific release version or edition of the publication.
+     */
+    private String edition;
+
+    /**
+     * The name of the organization responsible for publishing the title.
+     */
+    private String publisherName;
 	
 	public AllBookResponseDTO() {
 		

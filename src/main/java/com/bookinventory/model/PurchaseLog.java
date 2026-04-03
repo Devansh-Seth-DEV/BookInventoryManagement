@@ -7,10 +7,20 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Persistent entity representing a finalized sales transaction.
+ * Maps to the 'purchaselog' table and utilizes a composite primary key (PurchaseLogId).
+ * This acts as the historical record linking a specific customer to a specific physical unit.
+ */
 @Entity
 @Table(name = "purchaselog")
 @IdClass(PurchaseLogId.class)
 public class PurchaseLog {
+
+    /**
+     * The customer who performed the transaction.
+     * Part of the composite primary key, ensuring a historical link to the User entity.
+     */
 	@Id
 	@ManyToOne
 	@JoinColumn(
@@ -19,6 +29,10 @@ public class PurchaseLog {
 	)
 	private User user;
 	
+    /**
+     * The specific physical book unit that was sold.
+     * Part of the composite primary key, providing a direct link to the Inventory asset.
+     */
 	@Id
 	@ManyToOne
 	@JoinColumn(

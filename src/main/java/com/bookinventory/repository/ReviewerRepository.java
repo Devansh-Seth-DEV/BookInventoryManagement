@@ -11,6 +11,13 @@ import com.bookinventory.model.Reviewer;
 @Repository
 public interface ReviewerRepository extends JpaRepository<Reviewer, Integer> {
 
+	/**
+     * Retrieves all registered reviewers along with their historical performance metrics.
+     * Projects directly into a DTO using aggregate functions (COUNT, MAX) to calculate 
+     * total review volume and highest rating given.
+     * Uses a LEFT JOIN to ensure reviewers with zero reviews are still included in the directory.
+     * @return A list of AllReviewerResponseDTOs sorted alphabetically by name.
+     */
     @Query("""
             SELECT 
             	NEW com.bookinventory.dto.AllReviewerResponseDTO(

@@ -9,23 +9,36 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Column;
 
+/**
+ * Associative entity representing the relationship between a Book and an Author.
+ * Maps to the 'bookauthor' join table and uses a composite primary key (BookAuthorId).
+ * Allows for the storage of relationship-specific attributes like authorship priority.
+ */
 @Entity
 @Table(name = "bookauthor")
 @IdClass(BookAuthorId.class)
 public class BookAuthor {
 
+    /**
+     * The associated Book entity. Part of the composite primary key.
+     */
     @Id
     @ManyToOne
     @JoinColumn(name = "ISBN")
     private Book book;
 
+    /**
+     * The associated Author entity. Part of the composite primary key.
+     */
     @Id
     @ManyToOne
     @JoinColumn(name = "AuthorID")
     private Author author;
 
-    @Column(name = "PrimaryAuthor", 
-    		length = 1)
+    /**
+     * A flag or indicator determining if this author is the lead or primary contributor.
+     */
+    @Column(name = "PrimaryAuthor", length = 1)
     private String primaryAuthor;
 
     public BookAuthor() {

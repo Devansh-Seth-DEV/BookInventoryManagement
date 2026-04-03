@@ -8,11 +8,21 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+
+/**
+ * Persistent entity representing a critique of a specific book by a registered reviewer.
+ * Maps to the 'bookreview' table and utilizes a composite primary key (BookReviewId).
+ * Enforces a one-review-per-book constraint at the database level.
+ */
 @Entity
 @Table(name = "bookreview")
 @IdClass(BookReviewId.class)
 public class BookReview {
 
+    /**
+     * The ISBN of the book being reviewed. 
+     * Part of the composite primary key, explicitly defined as a 13-character string.
+     */
     @Id
     @ManyToOne
     @JoinColumn(
@@ -22,6 +32,10 @@ public class BookReview {
     )
     private Book book;
     
+    /**
+     * The unique identifier of the reviewer providing the feedback.
+     * Part of the composite primary key.
+     */
     @Id
     @ManyToOne
     @JoinColumn(
@@ -30,9 +44,16 @@ public class BookReview {
     )
     private Reviewer reviewer;
 
+    /**
+     * The numerical score assigned to the book (e.g., 1 to 5 stars).
+     */
     @Column(name = "Rating")
     private Integer rating;
 
+    /**
+     * The written feedback or analysis provided by the reviewer.
+     * Capped at 255 characters for consistent storage and display.
+     */
     @Column(name = "Comments", length = 255)
     private String comments;
 

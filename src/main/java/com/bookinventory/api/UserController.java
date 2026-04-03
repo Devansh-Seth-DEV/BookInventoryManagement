@@ -31,7 +31,11 @@ public class UserController {
         this.shoppingCartService = shoppingCartService;
     }
 
-    
+    /**
+     * Retrieves the core profile information for a specific registered user.
+     * @param userId The primary key of the User entity.
+     * @return ResponseEntity containing UserResponseDTO with profile details.
+     */ 
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDTO> getUserProfile(@PathVariable Integer userId) {
     	logger.info("Fetching user profile for userId: {}", userId);
@@ -43,6 +47,11 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Retrieves the active shopping cart and pending items for a specific user.
+     * @param userId The primary key identifying the unique user.
+     * @return ResponseEntity containing a list of UserCartResponseDTO.
+     */
     @GetMapping("/{userId}/cart")
     public ResponseEntity<List<UserCartResponseDTO>> getUserCart(@PathVariable Integer userId) {
         logger.info("API call received for cart of userId: {}", userId);
@@ -54,6 +63,11 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
     
+    /**
+     * Retrieves the complete historical audit trail of all assets purchased by a user.
+     * @param userId The primary key of the User entity.
+     * @return ResponseEntity containing a list of UserPurchaseDTO or a no-content status.
+     */
     @GetMapping("/{userId}/purchases")
     public ResponseEntity<List<UserPurchaseDTO>> getUserPurchaseHistory(
     		@PathVariable Integer userId
